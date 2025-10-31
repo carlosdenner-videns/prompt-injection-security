@@ -294,11 +294,28 @@ This project implements a comprehensive 5-phase evaluation of prompt injection d
 
 ### For Future Work
 
-1. **Adversarial robustness**: Test adaptive attacks targeting detectors
-2. **Real-world evaluation**: Test on actual RAG contexts
-3. **Adaptive thresholds**: Explore dynamic threshold adjustment
-4. **Additional detectors**: Develop v4, v5 for other attack types
-5. **Concept drift**: Address evolving attack patterns
+**Critical Validation Gaps** (Recommended):
+
+1. **Phase 6a: Obfuscation-Benign Validation** ⚠️ CRITICAL
+   - Evaluate on benign queries with obfuscation (Unicode, homoglyphs, ZWJ, mixed-script)
+   - Validate FAR ≤ 1% on obfuscated benign queries (not just clean queries)
+   - Current Phase 5 FPR (12%) measured only on clean benign queries
+   - Effort: 2-3 days
+
+2. **Phase 6b: Adaptive & Novel Attack Validation** ⚠️ CRITICAL
+   - Test against novel prompt injection techniques not in Phase 1
+   - Alternative phrasing, instruction embedding, multi-turn manipulation, encoding
+   - Validate TPR ≥ 50% on novel attacks
+   - Identify coverage gaps and recommend improvements
+   - Effort: 3-4 days
+
+**Optional Future Work**:
+
+3. **Adversarial robustness**: Test adaptive attacks targeting detectors/normalizer
+4. **Real-world evaluation**: Test on actual RAG contexts
+5. **Adaptive thresholds**: Explore dynamic threshold adjustment
+6. **Additional detectors**: Develop v4, v5 for other attack types
+7. **Concept drift**: Address evolving attack patterns
 
 ### For Publication
 
@@ -325,27 +342,66 @@ This project implements a comprehensive 5-phase evaluation of prompt injection d
 
 ---
 
-## Conclusion
+## Limitations & Validation Gaps
 
-This project successfully demonstrates a **practical, effective, and robust** input-side defense system against prompt injection attacks. The 5-phase evaluation provides:
+### Current Limitations
 
-1. **Comprehensive baseline** (Phase 1)
-2. **Effective detectors** (Phase 2)
-3. **Optimal combination** (Phase 3)
-4. **Production validation** (Phase 4)
-5. **Obfuscation hardening** (Phase 5)
+1. **Synthetic evaluation**: Uses simulated attack text, not real RAG contexts
+2. **Single dataset**: Evaluated on Phase 1 Part A only (400 samples)
+3. **Limited evasion types**: 8 evasion types tested (may not cover all attacks)
+4. **Limited homoglyph map**: Covers common confusables, not exhaustive
 
-The final recommendation is to **deploy Configuration E (v1 + v3) with Normalizer + Learned Fusion**, which achieves:
-- **≥90% TPR** (catches ≥90% of attacks)
-- **≤1% FAR** (≤1% false alarms)
-- **<0.1ms latency** (negligible overhead)
-- **Threshold-invariant performance** (robust, no tuning needed)
+### Critical Validation Gaps (Phase 6a/6b Recommended)
+
+1. **⚠️ Obfuscation-Benign Gap**: 
+   - Phase 5 FPR (12%) measured on clean benign queries only
+   - No evaluation on benign queries with obfuscation (Unicode, homoglyphs, ZWJ, mixed-script)
+   - Need to validate FAR ≤ 1% on obfuscated benign queries
+   - See Phase 6a recommendation
+
+2. **⚠️ Novel Attack Gap**:
+   - Detectors trained on 8 known evasion types from Phase 1
+   - No evaluation against novel/adaptive prompt injection techniques
+   - Alternative phrasing, instruction embedding, multi-turn manipulation not tested
+   - Need to validate TPR ≥ 50% on novel attacks
+   - See Phase 6b recommendation
 
 ---
 
-**Project Status**: ✅ **COMPLETE & READY FOR PUBLICATION**  
-**Recommendation**: Submit to IEEE Software  
-**Next Step**: Prepare manuscript with all phases and results
+## Conclusion
+
+This project successfully demonstrates a **practical, effective, and reproducible** input-side defense system against prompt injection attacks. The 5-phase evaluation provides:
+
+1. **Comprehensive baseline** (Phase 1): 65% ASR on LLaMA-2
+2. **Effective detectors** (Phase 2): v1 (80% TPR), v2 (44% TPR), v3 (57% TPR)
+3. **Optimal combination** (Phase 3): v1+v3 achieves 87% TPR, 0% FAR
+4. **Production validation** (Phase 4): Threshold-invariant performance
+5. **Obfuscation hardening** (Phase 5): 100% TPR on Phase 1 Part A (CV)
+
+### Deployment Recommendation
+
+**Deploy Configuration E (v1 + v3) with Normalizer + Learned Fusion**, which achieves:
+- **87% TPR** on known attacks (Phase 3 baseline)
+- **100% TPR** on Phase 1 Part A (Phase 5 CV)
+- **0% FAR** on clean benign queries
+- **12% FPR** on clean benign queries (Phase 5)
+- **<0.1ms latency** (negligible overhead)
+- **Threshold-invariant performance** (robust, no tuning needed)
+
+### Publication Strategy
+
+**Recommended Approach**:
+1. Publish Phases 1-5 as main contribution
+2. Clearly document limitations and validation gaps
+3. Propose Phase 6a/6b as future work
+4. Position as foundation for prompt injection defense research
+
+---
+
+**Project Status**: ✅ **PHASES 1-5 COMPLETE**  
+**Validation Gaps**: ⚠️ **PHASES 6A/6B RECOMMENDED** (2-3 weeks)  
+**Publication Ready**: ✅ **YES (with limitations documented)**  
+**Recommendation**: Submit to IEEE Software with Phase 6a/6b as future work
 
 ---
 
