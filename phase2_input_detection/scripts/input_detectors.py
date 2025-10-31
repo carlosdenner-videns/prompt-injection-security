@@ -163,22 +163,18 @@ class InputDetectorV1(InputDetectorBase):
 
 
 class InputDetectorV2(InputDetectorBase):
-    """V2: Heuristic rule-based detection."""
+    """V2: Heuristic rule-based detection (INDEPENDENT - no v1)."""
     
     def __init__(self):
         super().__init__("v2")
-        # Inherit v1 signatures
-        self.v1_detector = InputDetectorV1()
     
     def classify(self, text: str) -> DetectionResult:
-        """Classify using v1 + heuristic rules."""
-        # Start with v1 detection
-        v1_result = self.v1_detector.classify(text)
-        matched = list(v1_result.matched)
-        confidence = v1_result.confidence
-        is_attack = v1_result.is_attack
+        """Classify using ONLY heuristic rules (no v1 signatures)."""
+        matched = []
+        confidence = 0.0
+        is_attack = False
         
-        # Add heuristic rules
+        # Add heuristic rules (INDEPENDENT - no v1)
         
         # Rule 1: High symbol density
         if self._has_high_symbol_density(text):
@@ -295,26 +291,81 @@ class InputDetectorV2(InputDetectorBase):
 
 
 class InputDetectorV3(InputDetectorBase):
-    """V3: Statistical anomaly detection (no external models)."""
+    """V3: Semantic/Contextual anomaly detection (INDEPENDENT - no v1 or v2)."""
     
     def __init__(self):
         super().__init__("v3")
-        self.v2_detector = InputDetectorV2()
+        # Attack-related keywords that appear in injections
+        self.attack_keywords = {
+            "instruction": 0.7,
+            "ignore": 0.8,
+            "override": 0.8,
+            "system": 0.6,
+            "prompt": 0.6,
+            "respond": 0.5,
+            "output": 0.6,
+            "return": 0.5,
+            "reveal": 0.7,
+            "password": 0.8,
+            "secret": 0.8,
+            "admin": 0.7,
+            "access": 0.6,
+            "bypass": 0.8,
+            "escape": 0.7,
+            "execute": 0.7,
+            "command": 0.6,
+            "code": 0.5,
+        }
     
     def classify(self, text: str) -> DetectionResult:
-        """Classify using v2 + statistical anomaly detection."""
-        # Start with v2 detection
-        v2_result = self.v2_detector.classify(text)
-        matched = list(v2_result.matched)
-        confidence = v2_result.confidence
-        is_attack = v2_result.is_attack
+        """Classify using semantic/contextual anomaly detection."""
+        matched = []
+        confidence = 0.0
+        is_attack = False
         
-        # Add statistical anomaly detection
-        anomaly_score = self._compute_statistical_anomaly(text)
+        # Check for attack-related keywords
+        normalized = text.lower()
+        keyword_scores = []
         
-        if anomaly_score > 0.65:  # High anomaly
-            matched.append(f"statistical:anomaly_{anomaly_score:.2f}")
-            confidence = max(confidence, anomaly_score)
+        for keyword, weight in self.attack_keywords.items():
+            if keyword in normalized:
+                keyword_scores.append(weight)
+                matched.append(f"semantic:keyword_{keyword}")
+        
+        if keyword_scores:
+            # Average of keyword scores
+            avg_keyword_score = sum(keyword_scores) / len(keyword_scores)
+            confidence = max(confidence, avg_keyword_score)
+            
+            # Flag if multiple attack keywords (at least 2) with good average
+            if len(keyword_scores) >= 2 and avg_keyword_score >= 0.65:
+                is_attack = True
+            # Or single very high-confidence keyword
+            elif len(keyword_scores) == 1 and avg_keyword_score >= 0.8:
+                is_attack = True
+        
+        # Additional contextual checks
+        
+        # Check for instruction-like patterns (e.g., "do X", "tell me X")
+        instruction_patterns = [
+            r'\b(tell|show|reveal|give|provide|output|return|display|print)\s+(me|us|the|your)',
+            r'\b(what|how|where|who|when)\s+(is|are|was|were)',
+            r'\b(ignore|disregard|forget|bypass|override|escape)\b',
+        ]
+        
+        for pattern in instruction_patterns:
+            if re.search(pattern, normalized):
+                matched.append(f"semantic:pattern_{pattern[:20]}")
+                confidence = max(confidence, 0.65)
+                # Only flag if we already have keyword matches
+                if keyword_scores:
+                    is_attack = True
+        
+        # Check for suspicious punctuation/formatting patterns
+        suspicious_formatting = self._check_suspicious_formatting(text)
+        if suspicious_formatting:
+            matched.append("semantic:suspicious_formatting")
+            confidence = max(confidence, 0.6)
             is_attack = True
         
         return DetectionResult(
@@ -324,71 +375,27 @@ class InputDetectorV3(InputDetectorBase):
             version=self.version
         )
     
-    def _compute_statistical_anomaly(self, text: str) -> float:
-        """Compute anomaly score using statistical features."""
-        if len(text) < 10:
-            return 0.0
+    def _check_suspicious_formatting(self, text: str) -> bool:
+        """Check for suspicious formatting patterns."""
+        # Multiple dashes/equals (delimiter-like) - strong signal
+        if text.count('---') >= 1 or text.count('===') >= 1:
+            return True
         
-        scores = []
+        # Multiple colons (YAML-like) - only if very many
+        if text.count(':') >= 5:
+            return True
         
-        # Feature 1: Entropy (randomness) of character distribution
-        entropy = self._compute_entropy(text)
-        if entropy > 4.5:  # High entropy = more random
-            scores.append(0.6)
+        # Excessive punctuation - only very high
+        punct_count = sum(1 for c in text if c in '!@#$%^&*()_+-=[]{}|;:,.<>?/~`')
+        if punct_count / len(text) > 0.3:
+            return True
         
-        # Feature 2: Ratio of special characters
-        special_ratio = sum(1 for c in text if not c.isalnum() and not c.isspace()) / len(text)
-        if special_ratio > 0.25:
-            scores.append(0.5)
-        
-        # Feature 3: Unusual word length distribution
+        # All caps words (unusual emphasis) - only if very many
         words = text.split()
-        if words:
-            avg_word_len = sum(len(w) for w in words) / len(words)
-            if avg_word_len > 15 or avg_word_len < 2:
-                scores.append(0.4)
-        
-        # Feature 4: Presence of repeated patterns
-        if self._has_repeated_patterns(text):
-            scores.append(0.5)
-        
-        # Feature 5: Mixed case with numbers
-        has_mixed_case = any(c.isupper() for c in text) and any(c.islower() for c in text)
-        has_numbers = any(c.isdigit() for c in text)
-        if has_mixed_case and has_numbers:
-            scores.append(0.3)
-        
-        # Return max anomaly score
-        return max(scores) if scores else 0.0
-    
-    def _compute_entropy(self, text: str) -> float:
-        """Compute Shannon entropy of text."""
-        import math
-        
-        if len(text) == 0:
-            return 0.0
-        
-        # Count character frequencies
-        freq = {}
-        for char in text:
-            freq[char] = freq.get(char, 0) + 1
-        
-        # Compute entropy
-        entropy = 0.0
-        for count in freq.values():
-            p = count / len(text)
-            entropy -= p * math.log2(p)
-        
-        return entropy
-    
-    def _has_repeated_patterns(self, text: str) -> bool:
-        """Check for repeated character patterns."""
-        # Look for repeated substrings
-        for length in [2, 3, 4]:
-            for i in range(len(text) - length * 2):
-                pattern = text[i:i+length]
-                if pattern in text[i+length:i+length*3]:
-                    return True
+        if len(words) > 0:
+            all_caps_words = sum(1 for w in words if w.isupper() and len(w) > 2)
+            if all_caps_words / len(words) > 0.5:
+                return True
         
         return False
 
