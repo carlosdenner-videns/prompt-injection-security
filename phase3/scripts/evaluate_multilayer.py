@@ -150,16 +150,20 @@ class MultilayerDefenseEvaluator:
     def compute_metrics(self, df: pd.DataFrame):
         """Compute metrics for all configurations."""
         print("\n" + "="*70)
-        print("MULTILAYER DEFENSE METRICS")
+        print("MULTILAYER DEFENSE METRICS (INPUT-SIDE)")
         print("="*70)
+        print("\nNote: TPR measured on ALL injected input (successful + failed)")
+        print("      FAR measured on benign queries only (consistent with Phase 1)")
         
         metrics_list = []
         
-        # Separate successful attacks and benign
-        successful_attacks = df[df["injection_success"] == True]
+        # For input-side detection (consistent with Phase 2):
+        # - TPR: Detection rate on ALL injected input (attack pattern present)
+        # - FAR: False alarm rate on benign queries only
+        all_injected = df[df["is_injected"] == True]
         benign = df[df["is_injected"] == False]
         
-        total_attacks = len(successful_attacks)
+        total_injected = len(all_injected)
         total_benign = len(benign)
         
         for config in list_configurations():
@@ -168,25 +172,25 @@ class MultilayerDefenseEvaluator:
             confidence_col = f"config_{config_key}_confidence"
             latency_col = f"config_{config_key}_latency_ms"
             
-            # Metrics on successful attacks
-            tp = (successful_attacks[detected_col] == True).sum()
-            fn = (successful_attacks[detected_col] == False).sum()
+            # Metrics on ALL injected input (not just successful)
+            tp = (all_injected[detected_col] == True).sum()
+            fn = (all_injected[detected_col] == False).sum()
             
             # Metrics on benign
             fp = (benign[detected_col] == True).sum()
             tn = (benign[detected_col] == False).sum()
             
             # Calculate metrics
-            tpr = tp / total_attacks if total_attacks > 0 else 0.0
-            fpr = fp / total_benign if total_benign > 0 else 0.0
-            accuracy = (tp + tn) / (total_attacks + total_benign)
+            tpr = tp / total_injected if total_injected > 0 else 0.0
+            far = fp / total_benign if total_benign > 0 else 0.0
+            accuracy = (tp + tn) / (total_injected + total_benign)
             precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
             recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
             f1 = 2 * tp / (2 * tp + fp + fn) if (2 * tp + fp + fn) > 0 else 0.0
             
             # Wilson CIs
-            tpr_point, tpr_low, tpr_high = wilson_ci(tp, total_attacks)
-            fpr_point, fpr_low, fpr_high = wilson_ci(fp, total_benign)
+            tpr_point, tpr_low, tpr_high = wilson_ci(tp, total_injected)
+            far_point, far_low, far_high = wilson_ci(fp, total_benign)
             
             # Average latency
             avg_latency = df[latency_col].mean()
@@ -202,9 +206,9 @@ class MultilayerDefenseEvaluator:
                 "tpr": tpr,
                 "tpr_ci_low": tpr_low,
                 "tpr_ci_high": tpr_high,
-                "fpr": fpr,
-                "fpr_ci_low": fpr_low,
-                "fpr_ci_high": fpr_high,
+                "far": far,
+                "far_ci_low": far_low,
+                "far_ci_high": far_high,
                 "accuracy": accuracy,
                 "precision": precision,
                 "recall": recall,
@@ -217,7 +221,7 @@ class MultilayerDefenseEvaluator:
             print(f"\n📊 {config_key}: {config.name}")
             print(f"  Components: {', '.join(config.components)}")
             print(f"  TPR: {tpr:.1%} [95% CI: {tpr_low:.1%}, {tpr_high:.1%}]")
-            print(f"  FPR: {fpr:.1%} [95% CI: {fpr_low:.1%}, {fpr_high:.1%}]")
+            print(f"  FAR: {far:.1%} [95% CI: {far_low:.1%}, {far_high:.1%}]")
             print(f"  Accuracy: {accuracy:.1%}")
             print(f"  Precision: {precision:.1%}")
             print(f"  F1: {f1:.4f}")
@@ -287,10 +291,10 @@ class MultilayerDefenseEvaluator:
         print("PARETO FRONTIER ANALYSIS")
         print("="*70)
         
-        # Objectives: maximize TPR, minimize FPR, minimize latency
+        # Objectives: maximize TPR, minimize FAR, minimize latency
         metrics_df['pareto_score'] = (
             metrics_df['tpr'] * 100 -  # Maximize TPR
-            metrics_df['fpr'] * 100 -  # Minimize FPR
+            metrics_df['far'] * 100 -  # Minimize FAR
             metrics_df['avg_latency_ms'] / 10  # Minimize latency (scaled)
         )
         
@@ -303,10 +307,10 @@ class MultilayerDefenseEvaluator:
                     continue
                 # Check if row2 dominates row
                 if (row2['tpr'] >= row['tpr'] and 
-                    row2['fpr'] <= row['fpr'] and 
+                    row2['far'] <= row['far'] and 
                     row2['avg_latency_ms'] <= row['avg_latency_ms'] and
                     (row2['tpr'] > row['tpr'] or 
-                     row2['fpr'] < row['fpr'] or 
+                     row2['far'] < row['far'] or 
                      row2['avg_latency_ms'] < row['avg_latency_ms'])):
                     is_dominated = True
                     break
@@ -319,7 +323,7 @@ class MultilayerDefenseEvaluator:
         for config_id in pareto_frontier:
             row = metrics_df[metrics_df['config_id'] == config_id].iloc[0]
             print(f"\n  {config_id}: {row['config_name']}")
-            print(f"    TPR: {row['tpr']:.1%}, FPR: {row['fpr']:.1%}, Latency: {row['avg_latency_ms']:.2f}ms")
+            print(f"    TPR: {row['tpr']:.1%}, FAR: {row['far']:.1%}, Latency: {row['avg_latency_ms']:.2f}ms")
         
         return pareto_frontier
     

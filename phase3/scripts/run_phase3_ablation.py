@@ -79,7 +79,7 @@ def main():
     for config_id in pareto:
         row = metrics_df[metrics_df['config_id'] == config_id].iloc[0]
         print(f"  {config_id}: {row['config_name']}")
-        print(f"     TPR: {row['tpr']:.1%}, FPR: {row['fpr']:.1%}, Latency: {row['avg_latency_ms']:.2f}ms")
+        print(f"     TPR: {row['tpr']:.1%}, FAR: {row['far']:.1%}, Latency: {row['avg_latency_ms']:.2f}ms")
     
     print("\n" + "="*70)
     print("Next: Review PHASE3_MULTILAYER_SUMMARY.md for detailed analysis")

@@ -131,53 +131,53 @@ class InputDetectionEvaluator:
         return df
     
     def _compute_metrics(self, df: pd.DataFrame):
-        """Compute and display metrics."""
+        """Compute metrics for all configurations."""
         print("\n" + "="*70)
-        print("DETECTION PERFORMANCE METRICS")
+        print("DETECTION PERFORMANCE METRICS (INPUT-SIDE)")
         print("="*70)
+        print("\nNote: TPR measured on ALL injected input (successful + failed)")
+        print("      FAR measured on benign queries only (consistent with Phase 1)")
         
         metrics_list = []
         
+        # For input-side detection:
+        # - TPR: Detection rate on ALL injected input (attack pattern present)
+        # - FAR: False alarm rate on benign queries only
+        all_injected = df[df["is_injected"] == True]
+        benign = df[df["is_injected"] == False]
+        
+        total_injected = len(all_injected)
+        total_benign = len(benign)
+        
         for version in ["v1", "v2", "v3"]:
             detected_col = f"{version}_detected"
+            confidence_col = f"{version}_confidence"
+            latency_col = f"{version}_latency_ms"
             
-            # Separate successful and failed attacks
-            successful_attacks = df[df["injection_success"] == True]
-            failed_attacks = df[df["injection_success"] == False]
-            benign = df[df["is_injected"] == False]
+            # Metrics on ALL injected input (not just successful)
+            tp = (all_injected[detected_col] == True).sum()
+            fn = (all_injected[detected_col] == False).sum()
             
-            # Metrics on successful attacks (should detect)
-            tp_success = (successful_attacks[detected_col] == True).sum()
-            fn_success = (successful_attacks[detected_col] == False).sum()
-            
-            # Metrics on failed attacks (should not detect)
-            tp_failed = (failed_attacks[detected_col] == True).sum()
-            fn_failed = (failed_attacks[detected_col] == False).sum()
-            
-            # Metrics on benign (should not detect)
+            # Metrics on benign
             fp = (benign[detected_col] == True).sum()
             tn = (benign[detected_col] == False).sum()
             
             # Overall metrics
-            total_attacks = len(successful_attacks)
-            total_benign = len(benign)
-            
-            tpr = tp_success / total_attacks if total_attacks > 0 else 0.0
+            tpr = tp / total_injected if total_injected > 0 else 0.0
             far = fp / total_benign if total_benign > 0 else 0.0
-            accuracy = (tp_success + tn) / (total_attacks + total_benign)
-            precision = tp_success / (tp_success + fp) if (tp_success + fp) > 0 else 0.0
-            f1 = 2 * tp_success / (2 * tp_success + fp + fn_success) if (2 * tp_success + fp + fn_success) > 0 else 0.0
+            accuracy = (tp + tn) / (total_injected + total_benign)
+            precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+            recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+            f1 = 2 * tp / (2 * tp + fp + fn) if (2 * tp + fp + fn) > 0 else 0.0
             
             # Wilson CIs
-            tpr_point, tpr_low, tpr_high = wilson_ci(tp_success, total_attacks)
+            tpr_point, tpr_low, tpr_high = wilson_ci(tp, total_injected)
             far_point, far_low, far_high = wilson_ci(fp, total_benign)
             
             metrics = {
                 "version": version,
-                "tp_successful": tp_success,
-                "fn_successful": fn_success,
-                "tp_failed": tp_failed,
-                "fn_failed": fn_failed,
+                "tp": tp,
+                "fn": fn,
                 "fp": fp,
                 "tn": tn,
                 "tpr": tpr,
@@ -194,9 +194,8 @@ class InputDetectionEvaluator:
             metrics_list.append(metrics)
             
             print(f"\n📊 {version.upper()} - Input-Side Detection:")
-            print(f"  Successful attacks detected: {tp_success}/{total_attacks} ({tpr:.1%})")
+            print(f"  Injected input detected: {tp}/{total_injected} ({tpr:.1%})")
             print(f"    95% CI: [{tpr_low:.1%}, {tpr_high:.1%}]")
-            print(f"  Failed attacks detected: {tp_failed}/{len(failed_attacks)}")
             print(f"  False positives (benign): {fp}/{total_benign} ({far:.1%})")
             print(f"    95% CI: [{far_low:.1%}, {far_high:.1%}]")
             print(f"  Accuracy: {accuracy:.1%}")

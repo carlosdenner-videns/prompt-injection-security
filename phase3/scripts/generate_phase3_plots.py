@@ -28,8 +28,8 @@ class Phase3PlotGenerator:
         print("✓ Loaded metrics")
     
     def plot_tpr_fpr_comparison(self):
-        """Plot TPR and FPR for all configurations."""
-        print("\n📊 Generating TPR/FPR comparison...")
+        """Plot TPR and FAR for all configurations."""
+        print("\n📊 Generating TPR/FAR comparison...")
         
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
         
@@ -38,9 +38,9 @@ class Phase3PlotGenerator:
         tpr_low = self.metrics['tpr_ci_low'].tolist()
         tpr_high = self.metrics['tpr_ci_high'].tolist()
         
-        fpr = self.metrics['fpr'].tolist()
-        fpr_low = self.metrics['fpr_ci_low'].tolist()
-        fpr_high = self.metrics['fpr_ci_high'].tolist()
+        far = self.metrics['far'].tolist()
+        far_low = self.metrics['far_ci_low'].tolist()
+        far_high = self.metrics['far_ci_high'].tolist()
         
         x = np.arange(len(configs))
         
@@ -66,25 +66,25 @@ class Phase3PlotGenerator:
             ax1.text(bar.get_x() + bar.get_width()/2., height + 1,
                     f'{tpr[i]*100:.1f}%', ha='center', va='bottom', fontweight='bold', fontsize=9)
         
-        # FPR plot
-        bars2 = ax2.bar(x, [f*100 for f in fpr], color=colors, alpha=0.8)
-        yerr_low = [max(0, (fpr[i] - fpr_low[i])*100) for i in range(len(configs))]
-        yerr_high = [max(0, (fpr_high[i] - fpr[i])*100) for i in range(len(configs))]
+        # FAR plot
+        bars2 = ax2.bar(x, [f*100 for f in far], color=colors, alpha=0.8)
+        yerr_low = [max(0, (far[i] - far_low[i])*100) for i in range(len(configs))]
+        yerr_high = [max(0, (far_high[i] - far[i])*100) for i in range(len(configs))]
         if any(yerr_low) or any(yerr_high):
-            ax2.errorbar(x, [f*100 for f in fpr], yerr=[yerr_low, yerr_high],
+            ax2.errorbar(x, [f*100 for f in far], yerr=[yerr_low, yerr_high],
                          fmt='none', ecolor='black', capsize=5, alpha=0.6)
         
-        ax2.set_ylabel('FPR (%)', fontsize=12, fontweight='bold')
-        ax2.set_title('False Positive Rate by Configuration', fontsize=13, fontweight='bold')
+        ax2.set_ylabel('FAR - False Alarm Rate (%)', fontsize=12, fontweight='bold')
+        ax2.set_title('False Alarm Rate (Benign Queries)', fontsize=13, fontweight='bold')
         ax2.set_xticks(x)
         ax2.set_xticklabels(configs, fontsize=11, fontweight='bold')
-        ax2.set_ylim([0, max([f*100 for f in fpr]) * 1.5 + 1])
+        ax2.set_ylim([0, max([f*100 for f in far]) * 1.5 + 1])
         ax2.grid(axis='y', alpha=0.3)
         
         for i, bar in enumerate(bars2):
             height = bar.get_height()
             ax2.text(bar.get_x() + bar.get_width()/2., height + 0.1,
-                    f'{fpr[i]*100:.2f}%', ha='center', va='bottom', fontweight='bold', fontsize=9)
+                    f'{far[i]*100:.2f}%', ha='center', va='bottom', fontweight='bold', fontsize=9)
         
         plt.tight_layout()
         output_file = self.plots_dir / "tpr_fpr_comparison.png"
@@ -93,14 +93,14 @@ class Phase3PlotGenerator:
         plt.close()
     
     def plot_pareto_frontier(self):
-        """Plot Pareto frontier (TPR vs FPR)."""
+        """Plot Pareto frontier (TPR vs FAR)."""
         print("\n📊 Generating Pareto frontier...")
         
         fig, ax = plt.subplots(figsize=(12, 8))
         
         configs = self.metrics['config_id'].tolist()
         tpr = self.metrics['tpr'].tolist()
-        fpr = self.metrics['fpr'].tolist()
+        far = self.metrics['far'].tolist()
         latency = self.metrics['avg_latency_ms'].tolist()
         
         # Color by number of components
@@ -115,19 +115,19 @@ class Phase3PlotGenerator:
                 colors.append('#9b59b6')  # Purple - triple
         
         # Plot points
-        scatter = ax.scatter([f*100 for f in fpr], [t*100 for t in tpr], 
+        scatter = ax.scatter([f*100 for f in far], [t*100 for t in tpr], 
                             s=[200 + l*20 for l in latency],  # Size by latency
                             c=colors, alpha=0.7, edgecolors='black', linewidth=2)
         
         # Annotate points
         for i, config in enumerate(configs):
-            ax.annotate(config, (fpr[i]*100, tpr[i]*100),
+            ax.annotate(config, (far[i]*100, tpr[i]*100),
                        xytext=(5, 5), textcoords='offset points',
                        fontweight='bold', fontsize=11)
         
-        ax.set_xlabel('False Positive Rate (%)', fontsize=12, fontweight='bold')
+        ax.set_xlabel('False Alarm Rate (%)', fontsize=12, fontweight='bold')
         ax.set_ylabel('True Positive Rate (%)', fontsize=12, fontweight='bold')
-        ax.set_title('Pareto Frontier: TPR vs FPR\n(Bubble size = latency)', fontsize=13, fontweight='bold')
+        ax.set_title('Pareto Frontier: TPR vs FAR\n(Bubble size = latency)', fontsize=13, fontweight='bold')
         ax.grid(True, alpha=0.3)
         
         # Add legend
