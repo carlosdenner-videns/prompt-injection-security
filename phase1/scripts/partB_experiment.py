@@ -29,19 +29,19 @@ class SchemaSmugglingExperiment:
         Initialize experiment.
         
         Args:
-            tool_registry_path: Path to tool registry YAML (defaults to root/tool_registry.yaml)
-            variations_path: Path to attack variations JSON (defaults to root/schema_smuggling_variations.json)
+            tool_registry_path: Path to tool registry YAML (defaults to phase1/data/tool_registry.yaml)
+            variations_path: Path to attack variations JSON (defaults to phase1/data/schema_smuggling_variations.json)
             models: List of models to test
             seed: Random seed for reproducibility
         """
         if tool_registry_path is None:
             script_dir = Path(__file__).parent
-            root_dir = script_dir.parent.parent
-            tool_registry_path = str(root_dir / "tool_registry.yaml")
+            phase1_dir = script_dir.parent
+            tool_registry_path = str(phase1_dir / "data" / "tool_registry.yaml")
         if variations_path is None:
             script_dir = Path(__file__).parent
-            root_dir = script_dir.parent.parent
-            variations_path = str(root_dir / "schema_smuggling_variations.json")
+            phase1_dir = script_dir.parent
+            variations_path = str(phase1_dir / "data" / "schema_smuggling_variations.json")
         
         self.tool_registry_path = Path(tool_registry_path)
         self.variations_path = Path(variations_path)

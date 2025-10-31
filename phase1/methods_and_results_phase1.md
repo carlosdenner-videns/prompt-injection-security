@@ -519,7 +519,57 @@ Difference:              60%                       5.26%
 
 ---
 
-## 9. Recommendations for Phase 2
+## 9. Advanced Statistical Analysis
+
+### 9.1 Wilson 95% Confidence Intervals
+
+All attack success rates computed with Wilson score confidence intervals:
+
+**Part A - LLaMA-2-7b:**
+- Overall ASR: 65% (95% CI: [55.3%, 73.6%])
+- Delimiter Attack: 100% (95% CI: [72.2%, 100%])
+- Role Confusion: 100% (95% CI: [79.6%, 100%])
+- Plain: 100% (95% CI: [79.6%, 100%])
+
+**Part A - Falcon-7b:**
+- Overall ASR: 5% (95% CI: [2.2%, 11.2%])
+- Urgency Manipulation: 20% (95% CI: [5.7%, 50.9%])
+- Plain: 13.3% (95% CI: [3.7%, 37.9%])
+
+### 9.2 Pairwise Statistical Significance Testing
+
+Chi-square tests performed on all evasion type pairs:
+
+**Significant Differences (p < 0.05) for LLaMA-2-7b:**
+- Delimiter Attack vs. Homoglyph: χ² = 20.06, p = 7.5e-06 ✓ Highly significant
+- Plain vs. Urgency Manipulation: χ² = 10.21, p = 0.0014 ✓ Highly significant
+- Role Confusion vs. Urgency Manipulation: χ² = 10.21, p = 0.0014 ✓ Highly significant
+- Delimiter Attack vs. Payload Split: χ² = 5.07, p = 0.024 ✓ Significant
+
+**Total Pairwise Comparisons:** 56 (28 per model)
+**Significant Pairs:** 15 (26.8%)
+
+### 9.3 Defense Verdict Labeling
+
+Per-sample defense verdicts added to all 400 Phase A results:
+
+**Verdict Distribution:**
+- Benign queries: 200 (50.0%)
+- Attacks blocked: 130 (32.5%)
+- Attacks succeeded: 70 (17.5%)
+
+**Defense Family Mapping:**
+- Baseline: 30 samples (7.5%)
+- Context Boundary: 20 samples (5.0%)
+- Encoding: 68 samples (17.0%)
+- Fragmentation: 32 samples (8.0%)
+- Role Manipulation: 30 samples (7.5%)
+- Social Engineering: 20 samples (5.0%)
+- None (benign): 200 samples (50.0%)
+
+---
+
+## 10. Recommendations for Phase 2
 
 1. **Urgent:** Develop defense mechanisms for LLaMA-2 RAG injection vulnerability
 2. **Priority:** Implement context isolation techniques (e.g., XML tags, role markers)
@@ -527,12 +577,13 @@ Difference:              60%                       5.26%
 4. **Expansion:** Test additional models (GPT-3.5, Claude, Mistral) for generalization
 5. **Refinement:** Develop adaptive evasion techniques based on Part A results
 6. **Validation:** Test defenses against evolved attack techniques
+7. **Statistical Validation:** Use Wilson CIs and significance tests to validate defense effectiveness
 
 ---
 
-## 10. Appendix: Configuration Files
+## 11. Appendix: Configuration Files
 
-### 10.1 Knowledge Base Generator (partA_kb_generator.yaml)
+### 11.1 Knowledge Base Generator (partA_kb_generator.yaml)
 ```yaml
 dataset:
   seed: 1337
@@ -560,16 +611,52 @@ retrieval:
   chunks_per_query: 3
 ```
 
-### 10.2 Model Configuration (model_utils.py)
+### 11.2 Model Configuration (model_utils.py)
 - **Quantization:** float16
 - **Device Mapping:** Automatic (auto)
 - **Padding Side:** Left
 - **Trust Remote Code:** True
 - **Max New Tokens:** 150 (Part A), variable (Part B)
 
+### 11.3 Phase 1 Folder Structure
+
+All Phase 1 files organized into dedicated subdirectories:
+
+```
+phase1/
+├── data/                    # Raw and processed data
+│   ├── partA_results.json
+│   ├── partB_results.json
+│   ├── partA_kb.jsonl
+│   └── phase1_output_annotated.json
+├── scripts/                 # Phase 1 scripts (with corrected paths)
+│   ├── run_phase1.py
+│   ├── generate_kb.py
+│   ├── partA_experiment.py
+│   ├── partB_experiment.py
+│   ├── analyze_results.py
+│   ├── phase1_statistical_analysis.py
+│   ├── phase1_label_defenses.py
+│   └── model_utils.py
+├── stats/                   # Statistical analysis outputs
+│   ├── partA_analysis.csv
+│   ├── partB_analysis.csv
+│   ├── mcnemar_results.csv
+│   ├── ci_summary.csv
+│   └── phase1_summary.txt
+├── plots/                   # Visualizations
+│   ├── partA_heatmap.png
+│   ├── partB_heatmap.png
+│   ├── phase1_comparison.png
+│   └── defense_pairwise_matrix.png
+└── README.md
+```
+
+**Path Resolution:** All scripts use automatic path detection via `Path(__file__).parent`, allowing execution from any directory.
+
 ---
 
-## 11. Conclusion
+## 12. Conclusion
 
 Phase 1 successfully established baseline vulnerability metrics for prompt injection attacks across two LLMs in RAG and schema smuggling contexts. The 13x difference in RAG-borne injection vulnerability between LLaMA-2 and Falcon-7b highlights the critical importance of instruction-tuning and context separation strategies. These findings provide a foundation for developing targeted defense mechanisms in Phase 2.
 

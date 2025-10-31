@@ -9,7 +9,10 @@ phase1/
 ├── data/              # Raw and processed data
 │   ├── partA_results.json
 │   ├── partB_results.json
+│   ├── partA_kb.jsonl
 │   ├── phase1_output_annotated.json
+│   ├── tool_registry.yaml
+│   ├── schema_smuggling_variations.json
 │   └── *.csv (individual defense results)
 ├── scripts/           # Phase 1 scripts
 │   ├── run_phase1.py
@@ -130,7 +133,7 @@ This means:
 - ✅ Scripts work from **any directory**
 - ✅ No hardcoded paths needed
 - ✅ Data automatically saved to correct subdirectories
-- ✅ Config files automatically found in root
+- ✅ Config files automatically found in phase1/data/
 
 **You can run scripts from**:
 - Root: `python phase1/scripts/run_phase1.py`
