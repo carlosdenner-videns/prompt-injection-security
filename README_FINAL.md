@@ -1,8 +1,8 @@
 # Prompt Injection Security: Comprehensive Multi-Phase Evaluation
 
-**Status**: ✅ **COMPLETE - ALL 7 PHASES EVALUATED & VALIDATED**  
+**Status**: ✅ **COMPLETE - ALL 8 PHASES EVALUATED & VALIDATED**  
 **Date**: October 31, 2025  
-**Scope**: Baseline attacks → Detector development → Optimization → Validation → Novel attacks
+**Scope**: Baseline attacks → Detector development → Optimization → Validation → Novel attacks → Adversarial robustness
 
 ---
 
@@ -36,7 +36,7 @@ python phase6b/scripts/evaluate_novel_attacks.py
 
 ## Project Overview
 
-### 7-Phase Comprehensive Evaluation
+### 8-Phase Comprehensive Evaluation
 
 | Phase | Focus | Result | Status |
 |-------|-------|--------|--------|
@@ -47,6 +47,7 @@ python phase6b/scripts/evaluate_novel_attacks.py
 | **5** | Obfuscation hardening | 99% TPR @ 0% FPR (CV) | ✅ |
 | **6a** | Obfuscation-benign validation | 0.77% FAR | ✅ |
 | **6b** | Novel attack validation | 49.2% TPR | ✅ |
+| **6c** | Adversarial robustness | 53.1% TPR | ✅ |
 
 ---
 

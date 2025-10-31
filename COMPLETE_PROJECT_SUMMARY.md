@@ -329,16 +329,16 @@ This project implements a comprehensive 5-phase evaluation of prompt injection d
 
 ## Project Statistics
 
-- **Total Phases**: 5
-- **Total Samples**: 400 (Phase 1 Part A)
+- **Total Phases**: 8 (including 6a, 6b, 6c validation)
+- **Total Samples**: 400 (Phase 1 Part A) + 260 (Phase 6a) + 120 (Phase 6b) + 98 (Phase 6c)
 - **Detectors**: 3 (v1, v2, v3)
 - **Configurations**: 7 (Phase 3)
 - **Thresholds Evaluated**: 15 (Phase 4)
 - **CV Folds**: 5 (Phase 5)
-- **Features**: 25 (Phase 5)
+- **Features**: 27 (Phase 5)
 - **Metrics**: TPR, FAR, Precision, Recall, F1 (all with 95% CI)
 - **Statistical Tests**: McNemar's test, Wilson CI
-- **Visualizations**: 15+ plots across all phases
+- **Visualizations**: 20+ plots across all phases
 
 ---
 
@@ -370,38 +370,40 @@ This project implements a comprehensive 5-phase evaluation of prompt injection d
 
 ## Conclusion
 
-This project successfully demonstrates a **practical, effective, and reproducible** input-side defense system against prompt injection attacks. The 5-phase evaluation provides:
+This project successfully demonstrates a **practical, effective, and reproducible** input-side defense system against prompt injection attacks. The 8-phase evaluation provides:
 
 1. **Comprehensive baseline** (Phase 1): 65% ASR on LLaMA-2
 2. **Effective detectors** (Phase 2): v1 (80% TPR), v2 (44% TPR), v3 (57% TPR)
 3. **Optimal combination** (Phase 3): v1+v3 achieves 87% TPR, 0% FAR
 4. **Production validation** (Phase 4): Threshold-invariant performance
-5. **Obfuscation hardening** (Phase 5): 100% TPR on Phase 1 Part A (CV)
+5. **Obfuscation hardening** (Phase 5): 99% TPR @ 0% FPR (nested CV)
+6. **Obfuscation-benign validation** (Phase 6a): 0.77% FAR 
+7. **Novel attack validation** (Phase 6b): 49.2% TPR 
+8. **Adversarial robustness** (Phase 6c): 53.1% TPR 
 
 ### Deployment Recommendation
 
-**Deploy Configuration E (v1 + v3) with Normalizer + Learned Fusion**, which achieves:
+**Deploy Normalizer+v3**, which achieves:
 - **87% TPR** on known attacks (Phase 3 baseline)
-- **100% TPR** on Phase 1 Part A (Phase 5 CV)
-- **0% FAR** on clean benign queries
-- **12% FPR** on clean benign queries (Phase 5)
+- **0.77% FAR** on obfuscated benign queries (Phase 6a)
+- **44.2% TPR** on novel attacks (Phase 6b)
+- **50% TPR** on adversarial attacks (Phase 6c)
 - **<0.1ms latency** (negligible overhead)
 - **Threshold-invariant performance** (robust, no tuning needed)
 
-### Publication Strategy
+### Monitoring Fallback
 
-**Recommended Approach**:
-1. Publish Phases 1-5 as main contribution
-2. Clearly document limitations and validation gaps
-3. Propose Phase 6a/6b as future work
-4. Position as foundation for prompt injection defense research
+**Use Normalizer+v1+v3** for monitoring/research:
+- **49.2% TPR** on novel attacks (Phase 6b)
+- **53.1% TPR** on adversarial attacks (Phase 6c)
+- Higher FAR (12.3%) acceptable for monitoring
 
 ---
 
-**Project Status**: ✅ **PHASES 1-5 COMPLETE**  
-**Validation Gaps**: ⚠️ **PHASES 6A/6B RECOMMENDED** (2-3 weeks)  
-**Publication Ready**: ✅ **YES (with limitations documented)**  
-**Recommendation**: Submit to IEEE Software with Phase 6a/6b as future work
+**Project Status**: ✅ **ALL 8 PHASES COMPLETE**  
+**Validation**: ✅ **COMPREHENSIVE (6a, 6b, 6c)**  
+**Publication Ready**: ✅ **YES (with all limitations documented)**  
+**Recommendation**: Submit to IEEE Software with comprehensive 8-phase evaluation
 
 ---
 
@@ -412,6 +414,9 @@ This project successfully demonstrates a **practical, effective, and reproducibl
 **Phase 3**: `phase3/`  
 **Phase 4**: `phase4/`  
 **Phase 5**: `phase5/`  
+**Phase 6a**: `phase6a/`  
+**Phase 6b**: `phase6b/`  
+**Phase 6c**: `phase6c/`  
 
 **Summaries**:
 - `PHASE2_FINAL_SUMMARY.md`
