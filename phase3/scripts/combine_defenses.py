@@ -93,23 +93,26 @@ class DefenseCombiner:
         )
     
     def _fuse_or(self, results, threshold: float) -> Tuple[bool, float]:
-        """OR fusion: Any detector flags = attack."""
+        """OR fusion: Any detector flags = attack (based on is_attack flag only)."""
         max_confidence = max((r.confidence for r in results), default=0.0)
-        is_attack = any(r.is_attack for r in results) or max_confidence >= threshold
+        # Only use is_attack flags - confidence threshold should be applied at detector level
+        is_attack = any(r.is_attack for r in results)
         return is_attack, max_confidence
     
     def _fuse_and(self, results, threshold: float) -> Tuple[bool, float]:
-        """AND fusion: All detectors must flag = attack."""
+        """AND fusion: All detectors must flag = attack (based on is_attack flags only)."""
         min_confidence = min((r.confidence for r in results), default=0.0)
-        is_attack = all(r.is_attack for r in results) and min_confidence >= threshold
+        # Only use is_attack flags - confidence threshold should be applied at detector level
+        is_attack = all(r.is_attack for r in results)
         return is_attack, min_confidence
     
     def _fuse_majority(self, results, total: int, threshold: float) -> Tuple[bool, float]:
-        """Majority fusion: Majority vote."""
+        """Majority fusion: Majority vote (based on is_attack flags only)."""
         attack_count = sum(1 for r in results if r.is_attack)
         avg_confidence = sum(r.confidence for r in results) / len(results) if results else 0.0
         
-        is_attack = (attack_count > total / 2) or avg_confidence >= threshold
+        # Only use is_attack flags - confidence threshold should be applied at detector level
+        is_attack = attack_count > total / 2
         return is_attack, avg_confidence
     
     def _fuse_weighted(self, results, threshold: float) -> Tuple[bool, float]:
