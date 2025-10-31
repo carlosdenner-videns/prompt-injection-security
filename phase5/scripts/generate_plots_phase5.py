@@ -8,6 +8,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
+import warnings
+warnings.filterwarnings('ignore')
 
 
 class Phase5Plotter:
@@ -96,21 +98,25 @@ class Phase5Plotter:
             
             fig, axes = plt.subplots(1, 2, figsize=(14, 6))
             
-            # TPR comparison
-            axes[0].barh(df_comp['config'], df_comp['tpr'], xerr=[df_comp['tpr'] - df_comp['tpr_ci_low'], 
-                                                                    df_comp['tpr_ci_high'] - df_comp['tpr']], 
+            # TPR comparison with error bars
+            tpr_err_low = np.maximum(df_comp['tpr'] - df_comp['tpr_ci_low'], 0)
+            tpr_err_high = np.maximum(df_comp['tpr_ci_high'] - df_comp['tpr'], 0)
+            axes[0].barh(df_comp['config'], df_comp['tpr'], xerr=[tpr_err_low, tpr_err_high], 
                         color='steelblue', capsize=5)
             axes[0].set_xlabel('TPR', fontweight='bold')
             axes[0].set_title('TPR Comparison Across Configurations')
             axes[0].grid(axis='x', alpha=0.3)
+            axes[0].set_xlim(0, 1.05)
             
-            # FAR comparison
-            axes[1].barh(df_comp['config'], df_comp['far'], xerr=[df_comp['far'] - df_comp['far_ci_low'],
-                                                                   df_comp['far_ci_high'] - df_comp['far']],
+            # FAR comparison with error bars
+            far_err_low = np.maximum(df_comp['far'] - df_comp['far_ci_low'], 0)
+            far_err_high = np.maximum(df_comp['far_ci_high'] - df_comp['far'], 0)
+            axes[1].barh(df_comp['config'], df_comp['far'], xerr=[far_err_low, far_err_high],
                         color='crimson', capsize=5)
             axes[1].set_xlabel('FAR', fontweight='bold')
             axes[1].set_title('FAR Comparison Across Configurations')
             axes[1].grid(axis='x', alpha=0.3)
+            axes[1].set_xlim(0, max(df_comp['far_ci_high'].max() * 1.1, 0.05))
             
             plt.suptitle('Phase 5: Configuration Comparison', fontsize=14, fontweight='bold')
             plt.tight_layout()
