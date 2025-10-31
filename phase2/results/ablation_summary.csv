@@ -1,0 +1,2 @@
+total_samples,total_attacks,total_benign,signature_tp,signature_fp,rules_tp,rules_fp,combined_tp,combined_fp
+400,70,330,70,0,70,2,70,2
