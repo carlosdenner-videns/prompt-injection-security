@@ -49,7 +49,11 @@ def build_malicious_chunk(cfg, evasion_id, success_token):
     return text
 
 def main():
-    cfg = yaml.safe_load(Path("partA_kb_generator.yaml").read_text(encoding="utf-8"))
+    # Construct paths relative to script location
+    script_dir = Path(__file__).parent
+    root_dir = script_dir.parent.parent
+    
+    cfg = yaml.safe_load((root_dir / "partA_kb_generator.yaml").read_text(encoding="utf-8"))
     rng = random.Random(cfg["dataset"]["seed"])
     benign_total = cfg["counts"]["benign_total"]
     mal_per = cfg["counts"]["malicious_per_evasion"]
@@ -100,7 +104,8 @@ def main():
                 "success_token": success
             })
 
-    out = Path("partA_kb.jsonl")
+    phase1_dir = script_dir.parent
+    out = phase1_dir / "data" / "partA_kb.jsonl"
     with out.open("w", encoding="utf-8") as f:
         for d in docs:
             f.write(json.dumps(d, ensure_ascii=False) + "\n")

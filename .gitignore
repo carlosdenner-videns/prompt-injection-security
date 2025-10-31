@@ -42,19 +42,19 @@ env/
 *.ipynb
 
 # Data and results (large files)
-*.jsonl
-partA_results.json
-partB_results.json
-partA_checkpoint.json
-partA_analysis.csv
-partB_analysis.csv
-*.png
+#*.jsonl
+#partA_results.json
+#partB_results.json
+#partA_checkpoint.json
+#partA_analysis.csv
+#partB_analysis.csv
+#*.png
 *.jpg
-*.pdf
+#*.pdf
 
 # Logs
-*.log
-*.txt
+#*.log
+#*.txt
 
 # HuggingFace cache
 .cache/

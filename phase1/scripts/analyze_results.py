@@ -210,8 +210,13 @@ class Phase1Analyzer:
         
         return pd.DataFrame(results_summary)
     
-    def plot_partA_heatmap(self, summary_df: pd.DataFrame, output_file: str = "partA_heatmap.png"):
+    def plot_partA_heatmap(self, summary_df: pd.DataFrame, output_file: str = None):
         """Generate heatmap for Part A results."""
+        if output_file is None:
+            script_dir = Path(__file__).parent
+            phase1_dir = script_dir.parent
+            output_file = str(phase1_dir / "plots" / "partA_heatmap.png")
+        
         if summary_df is None or summary_df.empty:
             print("No data to plot")
             return
@@ -245,8 +250,13 @@ class Phase1Analyzer:
         print(f"Saved heatmap to {output_file}")
         plt.close()
     
-    def plot_partB_heatmap(self, summary_df: pd.DataFrame, output_file: str = "partB_heatmap.png"):
+    def plot_partB_heatmap(self, summary_df: pd.DataFrame, output_file: str = None):
         """Generate heatmap for Part B results."""
+        if output_file is None:
+            script_dir = Path(__file__).parent
+            phase1_dir = script_dir.parent
+            output_file = str(phase1_dir / "plots" / "partB_heatmap.png")
+        
         if summary_df is None or summary_df.empty:
             print("No data to plot")
             return
@@ -282,8 +292,13 @@ class Phase1Analyzer:
         print(f"Saved heatmap to {output_file}")
         plt.close()
     
-    def plot_comparison(self, partA_summary: pd.DataFrame, partB_summary: pd.DataFrame, output_file: str = "phase1_comparison.png"):
+    def plot_comparison(self, partA_summary: pd.DataFrame, partB_summary: pd.DataFrame, output_file: str = None):
         """Generate comparison plot of overall ASR across parts."""
+        if output_file is None:
+            script_dir = Path(__file__).parent
+            phase1_dir = script_dir.parent
+            output_file = str(phase1_dir / "plots" / "phase1_comparison.png")
+        
         if partA_summary is None or partB_summary is None:
             print("Need both Part A and Part B data for comparison")
             return
@@ -341,8 +356,13 @@ class Phase1Analyzer:
         print(f"Saved comparison plot to {output_file}")
         plt.close()
     
-    def generate_summary_report(self, output_file: str = "phase1_summary.txt"):
+    def generate_summary_report(self, output_file: str = None):
         """Generate a text summary report."""
+        if output_file is None:
+            script_dir = Path(__file__).parent
+            phase1_dir = script_dir.parent
+            output_file = str(phase1_dir / "stats" / "phase1_summary.txt")
+        
         with open(output_file, "w", encoding="utf-8") as f:
             f.write("="*70 + "\n")
             f.write("PHASE 1: BASELINE VULNERABILITY ASSESSMENT SUMMARY\n")

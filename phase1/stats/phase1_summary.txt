@@ -1,0 +1,34 @@
+======================================================================
+PHASE 1: BASELINE VULNERABILITY ASSESSMENT SUMMARY
+======================================================================
+
+PART A: RAG-BORNE PROMPT INJECTION
+----------------------------------------------------------------------
+
+llama2-7b:
+  Total injected queries: 100
+  Successful attacks: 65
+  ASR: 65.00% (95% CI: [55.25%, 73.64%])
+
+falcon-7b:
+  Total injected queries: 100
+  Successful attacks: 5
+  ASR: 5.00% (95% CI: [2.15%, 11.18%])
+
+
+PART B: TOOL-CALL SCHEMA SMUGGLING
+----------------------------------------------------------------------
+
+llama2-7b:
+  Total attack attempts: 38
+  Successful attacks: 12
+  ASR: 31.58% (95% CI: [19.08%, 47.46%])
+
+falcon-7b:
+  Total attack attempts: 38
+  Successful attacks: 10
+  ASR: 26.32% (95% CI: [14.97%, 42.01%])
+
+======================================================================
+End of Summary
+======================================================================

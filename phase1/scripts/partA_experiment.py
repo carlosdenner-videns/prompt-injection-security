@@ -19,7 +19,7 @@ class RAGInjectionExperiment:
     
     def __init__(
         self,
-        kb_path: str = "partA_kb.jsonl",
+        kb_path: str = None,
         models: List[str] = ["llama2-7b", "falcon-7b"],
         seed: int = 1337
     ):
@@ -27,10 +27,14 @@ class RAGInjectionExperiment:
         Initialize experiment.
         
         Args:
-            kb_path: Path to knowledge base JSONL file
+            kb_path: Path to knowledge base JSONL file (defaults to phase1/data/partA_kb.jsonl)
             models: List of models to test
             seed: Random seed for reproducibility
         """
+        if kb_path is None:
+            script_dir = Path(__file__).parent
+            phase1_dir = script_dir.parent
+            kb_path = str(phase1_dir / "data" / "partA_kb.jsonl")
         self.kb_path = Path(kb_path)
         self.model_names = models
         self.seed = seed

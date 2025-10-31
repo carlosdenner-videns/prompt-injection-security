@@ -53,33 +53,68 @@ huggingface-cli login
 
 ```
 Prompt Injection Security/
+├── phase1/                      # Phase 1 experiments and analysis
+│   ├── data/                    # Raw and processed data
+│   │   ├── partA_results.json
+│   │   ├── partB_results.json
+│   │   ├── partA_kb.jsonl
+│   │   └── phase1_output_annotated.json
+│   ├── scripts/                 # Phase 1 scripts
+│   │   ├── run_phase1.py
+│   │   ├── generate_kb.py
+│   │   ├── partA_experiment.py
+│   │   ├── partB_experiment.py
+│   │   ├── analyze_results.py
+│   │   ├── phase1_statistical_analysis.py
+│   │   ├── phase1_label_defenses.py
+│   │   └── model_utils.py
+│   ├── stats/                   # Statistical analysis outputs
+│   │   ├── partA_analysis.csv
+│   │   ├── partB_analysis.csv
+│   │   ├── mcnemar_results.csv
+│   │   ├── ci_summary.csv
+│   │   └── phase1_summary.txt
+│   ├── plots/                   # Visualizations
+│   │   ├── partA_heatmap.png
+│   │   ├── partB_heatmap.png
+│   │   ├── phase1_comparison.png
+│   │   └── defense_pairwise_matrix.png
+│   └── README.md
 ├── partA_kb_generator.yaml      # Part A knowledge base config
-├── generate_kb.py                # Generate poisoned knowledge base
-├── partA_kb.jsonl               # Generated knowledge base (440 docs)
-├── partA_experiment.py          # Part A experiment runner
 ├── tool_registry.yaml           # Part B tool definitions
 ├── schema_smuggling_variations.json  # Part B attack templates
-├── partB_experiment.py          # Part B experiment runner
-├── model_utils.py               # Model loading utilities
-├── analyze_results.py           # Results analysis & visualization
 ├── requirements.txt             # Python dependencies
 └── README.md                    # This file
 ```
 
 ## Usage
 
-### Step 1: Generate Knowledge Base (Part A)
+### Quick Start: Run Complete Phase 1 Pipeline
 
 ```powershell
-python generate_kb.py
+python phase1/scripts/run_phase1.py
 ```
 
-**Output**: `partA_kb.jsonl` (400 benign + 40 malicious documents)
+This orchestrates all steps:
+1. Generates knowledge base
+2. Runs Part A (RAG-borne injection)
+3. Runs Part B (schema smuggling)
+4. Analyzes results and generates visualizations
 
-### Step 2: Run Part A Experiment (RAG-Borne Injection)
+### Step-by-Step Execution
+
+#### Step 1: Generate Knowledge Base (Part A)
 
 ```powershell
-python partA_experiment.py
+python phase1/scripts/generate_kb.py
+```
+
+**Output**: `phase1/data/partA_kb.jsonl` (400 benign + 40 malicious documents)
+
+#### Step 2: Run Part A Experiment (RAG-Borne Injection)
+
+```powershell
+python phase1/scripts/partA_experiment.py
 ```
 
 **Configuration** (edit in script if needed):
@@ -90,7 +125,7 @@ python partA_experiment.py
 - Auto-resume: Enabled
 
 **Outputs**:
-- `partA_results.json` - Final results
+- `phase1/data/partA_results.json` - Final results
 - `partA_progress.log` - Live progress log
 - `partA_checkpoint.json` - Resume capability (auto-deleted on completion)
 
@@ -248,6 +283,42 @@ Current mechanisms (12):
 10. Dual-tool coercion
 11. SQL comment smuggling
 12. SQL destructive statements
+
+## Advanced Analysis
+
+### Statistical Analysis
+
+After experiments complete, run advanced statistical analysis:
+
+```powershell
+python phase1/scripts/phase1_statistical_analysis.py
+```
+
+**Outputs** (in `phase1/stats/`):
+- `ci_summary.csv` - Wilson 95% confidence intervals for ASR, FAR, FDR
+- `mcnemar_results.csv` - Pairwise statistical significance tests (χ² or Fisher's exact)
+- `defense_pairwise_matrix.png` - Heatmap visualization of attack success rates
+
+**Metrics Computed**:
+- **ASR (Attack Success Rate)**: Percentage of injections that succeeded
+- **FAR (False Alarm Rate)**: Percentage of benign queries incorrectly flagged
+- **FDR (False Discovery Rate)**: Proportion of positive predictions that are false
+
+### Defense Verdict Labeling
+
+Label per-sample defense verdicts for Phase 2 analysis:
+
+```powershell
+python phase1/scripts/phase1_label_defenses.py
+```
+
+**Output** (in `phase1/data/`):
+- `phase1_output_annotated.json` - Results with per-sample defense labels
+
+**New Fields Added**:
+- `caught_by_signature`, `caught_by_rules`, `caught_by_nemo`, `caught_by_moderation`
+- `defense_family` - Inferred from evasion type
+- `verdict` - Classification (benign_query, attack_blocked, attack_succeeded)
 
 ## Key Metrics
 

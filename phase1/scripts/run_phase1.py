@@ -34,9 +34,10 @@ def run_step(step_name, script_name, required_files=None):
     start_time = time.time()
     
     try:
-        # Run the script
+        # Run the script from scripts directory
+        script_path = Path(__file__).parent / script_name
         result = subprocess.run(
-            [sys.executable, script_name],
+            [sys.executable, str(script_path)],
             check=True,
             capture_output=False,
             text=True
@@ -45,9 +46,24 @@ def run_step(step_name, script_name, required_files=None):
         elapsed = time.time() - start_time
         print(f"\n✓ {step_name} completed in {elapsed/60:.1f} minutes")
         
-        # Verify required files exist
+        # Verify required files exist (with phase1 prefix)
         if required_files:
-            missing = [f for f in required_files if not Path(f).exists()]
+            phase1_dir = Path(__file__).parent.parent
+            missing = []
+            for f in required_files:
+                # Check in appropriate subdirectory
+                if f.endswith('.jsonl') or f.endswith('.json'):
+                    full_path = phase1_dir / "data" / f
+                elif f.endswith('.csv') or f.endswith('.txt'):
+                    full_path = phase1_dir / "stats" / f
+                elif f.endswith('.png'):
+                    full_path = phase1_dir / "plots" / f
+                else:
+                    full_path = phase1_dir / "data" / f
+                
+                if not full_path.exists():
+                    missing.append(str(full_path))
+            
             if missing:
                 print(f"\n✗ ERROR: Expected files not found: {missing}")
                 return False
@@ -124,24 +140,25 @@ def main():
     print(f"Finished at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
     print("\n📊 Generated outputs:")
+    phase1_dir = Path(__file__).parent.parent
     outputs = [
-        ("Knowledge Base", "partA_kb.jsonl"),
-        ("Part A Results", "partA_results.json"),
-        ("Part B Results", "partB_results.json"),
-        ("Part A Analysis", "partA_analysis.csv"),
-        ("Part B Analysis", "partB_analysis.csv"),
-        ("Part A Heatmap", "partA_heatmap.png"),
-        ("Part B Heatmap", "partB_heatmap.png"),
-        ("Comparison Plot", "phase1_comparison.png"),
-        ("Summary Report", "phase1_summary.txt")
+        ("Knowledge Base", phase1_dir / "data" / "partA_kb.jsonl"),
+        ("Part A Results", phase1_dir / "data" / "partA_results.json"),
+        ("Part B Results", phase1_dir / "data" / "partB_results.json"),
+        ("Part A Analysis", phase1_dir / "stats" / "partA_analysis.csv"),
+        ("Part B Analysis", phase1_dir / "stats" / "partB_analysis.csv"),
+        ("Part A Heatmap", phase1_dir / "plots" / "partA_heatmap.png"),
+        ("Part B Heatmap", phase1_dir / "plots" / "partB_heatmap.png"),
+        ("Comparison Plot", phase1_dir / "plots" / "phase1_comparison.png"),
+        ("Summary Report", phase1_dir / "stats" / "phase1_summary.txt")
     ]
     
-    for name, filename in outputs:
-        if Path(filename).exists():
-            size = Path(filename).stat().st_size / 1024  # KB
-            print(f"  ✓ {name}: {filename} ({size:.1f} KB)")
+    for name, filepath in outputs:
+        if filepath.exists():
+            size = filepath.stat().st_size / 1024  # KB
+            print(f"  ✓ {name}: {filepath.relative_to(phase1_dir)} ({size:.1f} KB)")
         else:
-            print(f"  ✗ {name}: {filename} (MISSING)")
+            print(f"  ✗ {name}: {filepath.relative_to(phase1_dir)} (MISSING)")
     
     print("\n" + "="*70)
     print("Next steps:")
