@@ -554,9 +554,12 @@ Chi-square tests performed on all evasion type pairs:
 Per-sample defense verdicts added to all 400 Phase A results:
 
 **Verdict Distribution:**
-- Benign queries: 200 (50.0%)
-- Attacks blocked: 130 (32.5%)
-- Attacks succeeded: 70 (17.5%)
+- Benign queries: 200 (50.0% of 400 total)
+- Attack samples: 200 (50.0% of 400 total)
+  - Attacks blocked (by models): 130 (65.0% of 200 attacks)
+  - Attacks succeeded (by models): 70 (35.0% of 200 attacks)
+
+**Note:** ASR is reported per model (llama2-7b: 65%, falcon-7b: 5%) out of the 200 attacks each model tested.
 
 **Defense Family Mapping:**
 - Baseline: 30 samples (7.5%)

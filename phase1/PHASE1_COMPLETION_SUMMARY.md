@@ -132,10 +132,13 @@ Each sample now includes:
 | homoglyph | encoding |
 
 ### Output Statistics
-- **Total samples:** 400
-- **Benign queries:** 200 (50.0%)
-- **Attacks blocked:** 130 (32.5%)
-- **Attacks succeeded:** 70 (17.5%)
+- **Total samples:** 400 (200 benign + 200 attacks)
+- **Benign queries:** 200
+- **Attack samples:** 200
+  - **Attacks blocked (by models):** 130 (65.0% of 200 attacks)
+  - **Attacks succeeded (by models):** 70 (35.0% of 200 attacks)
+
+**Note:** ASR is reported per model (llama2-7b: 65%, falcon-7b: 5%) out of the 200 attacks each model tested.
 
 ### Outputs
 | File | Description | Size |
