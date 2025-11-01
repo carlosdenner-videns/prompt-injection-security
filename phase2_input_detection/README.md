@@ -64,25 +64,26 @@ python phase2_input_detection/scripts/generate_plots.py
 
 #### V1: Signature-Based (Recommended)
 - **Approach**: Exact/fuzzy matching of known attack phrases
-- **Performance**: 78.6% TPR, 0% FAR
+- **Performance**: 80.0% TPR, 0% FAR
 - **Speed**: <1ms per sample
 - **Complexity**: ~100 lines
 - **Patterns**: 6 categories (instruction override, direct output, role confusion, urgency, delimiters, system instructions)
 - **Additional**: Base64 and homoglyph detection
 
 #### V2: Heuristic Rule-Based
-- **Approach**: v1 + statistical anomaly rules
-- **Performance**: 81.4% TPR, 0% FAR
+- **Approach**: Statistical anomaly rules (independent from v1)
+- **Performance**: 44.0% TPR, 0% FAR
 - **Speed**: ~2ms per sample
 - **Complexity**: ~200 lines
-- **Rules**: 6 additional heuristics (symbol density, numeric strings, uncommon Unicode, YAML/JSON patterns, capitalization)
+- **Rules**: 6 heuristics (symbol density, numeric strings, uncommon Unicode, YAML/JSON patterns, capitalization)
 
-#### V3: Statistical Anomaly Detection
-- **Approach**: v2 + statistical features
-- **Performance**: 81.4% TPR, 0% FAR
+#### V3: Semantic/Contextual Detection (Keyword + Pattern Matching)
+- **Approach**: Attack-related keyword matching + contextual pattern detection
+- **Performance**: 57.0% TPR, 0% FAR
 - **Speed**: ~3ms per sample
 - **Complexity**: ~300 lines
-- **Features**: Shannon entropy, special character ratio, word length distribution, repeated patterns, mixed case+numbers
+- **Features**: 18 weighted keywords, instruction patterns, formatting anomalies
+- **Note**: Originally designed as statistical ML classifier; implemented as semantic detector for better generalization on limited training data
 
 ### Why Input-Side?
 
