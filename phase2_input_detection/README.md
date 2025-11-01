@@ -104,7 +104,9 @@ python phase2_input_detection/scripts/generate_plots.py
 
 ### Performance Summary
 
-### Overall Results (Corrected Metrics)
+### Overall Results (on ALL Attack Attempts)
+
+**Important**: TPR is measured on **ALL 200 injected inputs** (70 successful + 130 failed attacks), NOT just successful attacks. This is correct for input-side detection because the detector must flag malicious input regardless of whether the model complies.
 
 | Metric | v1 | v2 | v3 |
 |--------|----|----|-----|
