@@ -399,7 +399,7 @@ Evaluate system robustness against adversarial attacks designed to evade detecti
 
 ![Figure 16: System Architecture](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_16_system_architecture.png)
 
-**Figure 16: System Architecture - Prompt Injection Detection Pipeline.** Flow diagram showing data flow through system components: Input → Normalizer → Detectors (v1, v2, v3) → Fusion (OR Logic) → Decision. Includes performance metrics (87% TPR, 0.77% FAR, <0.1ms latency) and data flow examples.
+**Figure 16: Prompt Injection Detection Pipeline Architecture.** Comprehensive system diagram showing: (1) Main detection pipeline with consistently labeled components (Normalizer → Signature Detector v1 → Semantic Detector v3 → OR Fusion → Decision → LLM), (2) Concrete attack flow example demonstrating how "Ignore previous instructions…" is processed through normalization, v1 signature matching, and blocked decision, (3) Recommended production configuration (Normalizer+v3) highlighted in green, (4) LLM placement showing input-side detection before prompt reaches the model, (5) Performance metrics (87% TPR, 0.77% FAR, <0.1ms latency), and (6) Key design principles emphasizing input-side blocking, complementary detectors, and threshold-invariant deployment. Publication-ready design optimized for print visibility.
 
 ### Production Deployment
 
