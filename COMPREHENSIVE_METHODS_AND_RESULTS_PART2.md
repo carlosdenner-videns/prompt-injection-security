@@ -63,6 +63,8 @@
 | **Attacks Caught** | 198/200 | — |
 | **Attacks Missed** | 2/200 | — |
 
+*See Figure 8: Learned Fusion (Nested CV) & Figure 9: Lift Over Baseline*
+
 **Lift vs Phase 3 Baseline:**
 - Phase 3 (v1+v3): 87% TPR
 - Phase 5 (Learned): 99% TPR
@@ -126,6 +128,8 @@ Validate that the system does NOT mistakenly flag benign queries with obfuscatio
 | **Normalizer+v3** | **0.77%** | **✅ GOAL ACHIEVED** |
 | v1+v3 | 23.8% | ❌ Too high |
 | Normalizer+v1+v3 | 12.3% | ⚠️ Moderate |
+
+*See Figure 10: FAR by Configuration and Obfuscation Type*
 
 **FAR by Obfuscation Type (Normalizer+v3):**
 
@@ -207,6 +211,8 @@ Evaluate how well the system detects prompt injection attacks NOT seen in Phase 
 | v1+v3 | 49.2% | ⚠️ Near goal |
 | **Normalizer+v1+v3** | **49.2%** | **⚠️ NEAR GOAL** |
 
+*See Figure 11: TPR by Attack Type & Figure 12: Coverage Gaps*
+
 **TPR by Attack Type (Normalizer+v1+v3):**
 
 | Attack Type | TPR | Coverage | Gap |
@@ -285,6 +291,8 @@ Evaluate system robustness against adversarial attacks designed to evade detecti
 | Normalizer+v3 | 53.1% | ⚠️ Moderate |
 | Normalizer+v1+v3 | 53.1% | ⚠️ Moderate |
 
+*See Figure 13: Adversarial Technique Effectiveness*
+
 **Adversarial Technique Effectiveness:**
 
 | Technique | Evasion Rate | Difficulty |
@@ -325,16 +333,18 @@ Evaluate system robustness against adversarial attacks designed to evade detecti
 
 ### Performance Progression
 
-| Phase | Configuration | TPR | FAR | F1 | Notes |
-|-------|--------------|-----|-----|-----|-------|
-| 1 | Baseline (LLaMA-2) | 65% | — | — | Attack success rate |
-| 2 | v1 (Signature) | 80% | 0% | 0.889 | Input-side detection |
-| 3 | v1+v3 (OR) | 87% | 0% | 0.931 | Optimal fusion |
-| 4 | v1+v3 (Threshold) | 87% | 0% | 0.931 | Threshold-invariant |
-| 5 | Learned Fusion | 99% | 0% | 0.995 | Nested CV (Phase 1) |
-| 6a | Normalizer+v3 | 87% | 0.77% | — | Obfuscation-benign |
-| 6b | Normalizer+v1+v3 | 49.2% | 12.3% | — | Novel attacks |
-| 6c | Normalizer+v1+v3 | 53.1% | — | — | Adversarial attacks |
+| Phase | Configuration | TPR | FAR | F1 | Notes | Figure |
+|-------|--------------|-----|-----|-----|-------|--------|
+| 1 | Baseline (LLaMA-2) | 65% | — | — | Attack success rate | Fig 1-3 |
+| 2 | v1 (Signature) | 80% | 0% | 0.889 | Input-side detection | Fig 4 |
+| 3 | v1+v3 (OR) | 87% | 0% | 0.931 | Optimal fusion | Fig 5-6 |
+| 4 | v1+v3 (Threshold) | 87% | 0% | 0.931 | Threshold-invariant | Fig 7 |
+| 5 | Learned Fusion | 99% | 0% | 0.995 | Nested CV (Phase 1) | Fig 8-9 |
+| 6a | Normalizer+v3 | 87% | 0.77% | — | Obfuscation-benign | Fig 10 |
+| 6b | Normalizer+v1+v3 | 49.2% | 12.3% | — | Novel attacks | Fig 11-12 |
+| 6c | Normalizer+v1+v3 | 53.1% | — | — | Adversarial attacks | Fig 13 |
+
+*See Figure 14: Cross-Phase Performance Progression & Figure 15: Generalization Gap Analysis*
 
 ### Key Observations
 

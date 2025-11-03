@@ -13,16 +13,18 @@ This comprehensive 8-phase evaluation framework establishes baseline vulnerabili
 
 ### Key Findings
 
-| Phase | Focus | Result | Status |
-|-------|-------|--------|--------|
-| **1** | Baseline attack effectiveness | 65% ASR (LLaMA-2), 5% (Falcon-7b) | ✅ |
-| **2** | Input-side detector development | v1: 80% TPR, 0% FAR | ✅ |
-| **3** | Multilayer defense optimization | v1+v3 OR: 87% TPR, 0% FAR | ✅ |
-| **4** | Threshold robustness | Threshold-invariant (0.05-0.75) | ✅ |
-| **5** | Obfuscation hardening | 99% TPR (nested CV), 0% FPR | ✅ |
-| **6a** | Obfuscation-benign validation | Normalizer+v3: 0.77% FAR | ✅ |
-| **6b** | Novel attack validation | Normalizer+v1+v3: 49.2% TPR | ✅ |
-| **6c** | Adversarial robustness | 53.1% TPR on adversarial attacks | ✅ |
+| Phase | Focus | Result | Status | Figure |
+|-------|-------|--------|--------|--------|
+| **1** | Baseline attack effectiveness | 65% ASR (LLaMA-2), 5% (Falcon-7b) | ✅ | Fig 1-3 |
+| **2** | Input-side detector development | v1: 80% TPR, 0% FAR | ✅ | Fig 4, 17 |
+| **3** | Multilayer defense optimization | v1+v3 OR: 87% TPR, 0% FAR | ✅ | Fig 5-6 |
+| **4** | Threshold robustness | Threshold-invariant (0.05-0.75) | ✅ | Fig 7 |
+| **5** | Obfuscation hardening | 99% TPR (nested CV), 0% FPR | ✅ | Fig 8-9 |
+| **6a** | Obfuscation-benign validation | Normalizer+v3: 0.77% FAR | ✅ | Fig 10 |
+| **6b** | Novel attack validation | Normalizer+v1+v3: 49.2% TPR | ✅ | Fig 11-12 |
+| **6c** | Adversarial robustness | 53.1% TPR on adversarial attacks | ✅ | Fig 13 |
+
+**See FIGURES_AND_VISUALIZATIONS_GUIDE.md for complete figure specifications**
 
 ---
 
@@ -88,6 +90,8 @@ Establish baseline vulnerability metrics for prompt injection attacks across two
 
 **Key Finding:** LLaMA-2 is 13x more vulnerable.
 
+*See Figure 1: Attack Success Rate Comparison*
+
 **Vulnerability by Evasion Type (LLaMA-2-7b):**
 
 | Evasion Type | Samples | Successful | ASR |
@@ -100,6 +104,8 @@ Establish baseline vulnerability metrics for prompt injection attacks across two
 | payload_split | 16 | 8 | 50.00% |
 | urgency_manipulation | 10 | 2 | 20.00% |
 | homoglyph | 14 | 0 | 0.00% |
+
+*See Figure 2: Evasion Technique Effectiveness Heatmap*
 
 **Vulnerability by Evasion Type (Falcon-7b):**
 
@@ -212,6 +218,8 @@ Develop and evaluate three iterative input-side detectors (v1, v2, v3) that scan
 | **Precision** | 100.0% | 100.0% | 100.0% |
 | **F1 Score** | 0.8889 | 0.6111 | 0.7261 |
 
+*See Figure 4: Detector Performance Comparison & Figure 17: Confusion Matrices*
+
 **McNemar's Test Results:**
 
 | Comparison | χ² | p-value | Result |
@@ -276,6 +284,8 @@ is_attack = (v1.is_attack + v2.is_attack + v3.is_attack) >= 2
 | v1+v2+v3 (MAJORITY) | 80.0% | 0.0% | 0.8889 | Same as v1 |
 | v1+v2+v3 (WEIGHTED) | 85.0% | 0.0% | 0.9167 | Good but worse |
 
+*See Figure 5: Fusion Strategy Comparison*
+
 **Optimal Configuration:** v1+v3 (OR Fusion)
 - TPR: 87.0% (174/200 injected)
 - FAR: 0.0% (0/200 benign)
@@ -288,6 +298,8 @@ is_attack = (v1.is_attack + v2.is_attack + v3.is_attack) >= 2
 | v1 | 160/200 (80%) | 6 attacks |
 | v3 | 114/200 (57%) | 0 attacks |
 | v1+v3 | 174/200 (87%) | 14 attacks |
+
+*See Figure 6: Detector Complementarity*
 
 **Why v1+v3 Works:**
 - v1 catches: Plain text, delimiters, role confusion, urgency
@@ -327,6 +339,8 @@ Evaluate how varying confidence thresholds affect TPR/FAR tradeoffs for the v1+v
 | 0.15 | 87.0% | 0.0% | 0.9305 |
 | ... | ... | ... | ... |
 | 0.75 | 87.0% | 0.0% | 0.9305 |
+
+*See Figure 7: Threshold Robustness*
 
 **Explanation:** OR-fusion uses binary is_attack flags (not continuous scores)
 - v1 returns: is_attack=True/False (binary)
