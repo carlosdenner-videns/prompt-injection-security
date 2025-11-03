@@ -1,0 +1,5 @@
+Attack Vector,Model,ASR
+RAG-Borne,LLaMA-2-7b,65
+RAG-Borne,Falcon-7b,5
+Schema Smuggling,LLaMA-2-7b,31.58
+Schema Smuggling,Falcon-7b,26.32
