@@ -25,9 +25,10 @@ plt.rcParams['savefig.dpi'] = 300
 plt.rcParams['font.size'] = 10
 
 # Create output directory
-OUTPUT_DIR = Path('GENERATED_FIGURES')
+SCRIPT_DIR = Path(__file__).parent
+OUTPUT_DIR = SCRIPT_DIR / 'GENERATED_FIGURES'
 OUTPUT_DIR.mkdir(exist_ok=True)
-DATA_DIR = Path('FIGURE_DATA')
+DATA_DIR = SCRIPT_DIR  # Data files are in same directory as script
 
 print("=" * 70)
 print("MANUSCRIPT FIGURE GENERATION")
@@ -41,11 +42,11 @@ try:
     data = pd.read_csv(DATA_DIR / 'figure_1_data.csv')
     fig, ax = plt.subplots(figsize=(8, 5))
     
-    x = np.arange(len(data['Attack Vector'].unique()))
+    x = np.arange(len(data.columns) - 1)
     width = 0.35
     
-    llama_data = data[data['Model'] == 'LLaMA-2']['ASR'].values
-    falcon_data = data[data['Model'] == 'Falcon-7b']['ASR'].values
+    llama_data = data.iloc[0, 1:].values.astype(float)
+    falcon_data = data.iloc[1, 1:].values.astype(float)
     
     ax.bar(x - width/2, llama_data, width, label='LLaMA-2-7b', color='#1f77b4')
     ax.bar(x + width/2, falcon_data, width, label='Falcon-7b', color='#ff7f0e')
@@ -53,7 +54,7 @@ try:
     ax.set_ylabel('Attack Success Rate (%)')
     ax.set_title('Figure 1: Attack Success Rate Comparison')
     ax.set_xticks(x)
-    ax.set_xticklabels(data['Attack Vector'].unique())
+    ax.set_xticklabels(data.columns[1:])
     ax.legend()
     ax.grid(axis='y', alpha=0.3)
     
@@ -94,12 +95,11 @@ try:
     data = pd.read_csv(DATA_DIR / 'figure_3_data.csv')
     fig, ax = plt.subplots(figsize=(7, 4.5))
     
-    tools = data['Tool'].unique()
-    x = np.arange(len(tools))
+    x = np.arange(len(data.columns) - 1)
     width = 0.35
     
-    llama_data = data[data['Model'] == 'LLaMA-2']['ASR'].values
-    falcon_data = data[data['Model'] == 'Falcon-7b']['ASR'].values
+    llama_data = data.iloc[0, 1:].values.astype(float)
+    falcon_data = data.iloc[1, 1:].values.astype(float)
     
     ax.bar(x - width/2, llama_data, width, label='LLaMA-2-7b', color='#1f77b4')
     ax.bar(x + width/2, falcon_data, width, label='Falcon-7b', color='#ff7f0e')
@@ -107,7 +107,7 @@ try:
     ax.set_ylabel('Attack Success Rate (%)')
     ax.set_title('Figure 3: Schema Smuggling Vulnerability by Tool')
     ax.set_xticks(x)
-    ax.set_xticklabels(tools)
+    ax.set_xticklabels(data.columns[1:])
     ax.legend()
     ax.grid(axis='y', alpha=0.3)
     
