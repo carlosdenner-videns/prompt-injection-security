@@ -15,6 +15,7 @@ import matplotlib.patches as mpatches
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch, Rectangle
 import matplotlib.lines as mlines
 import numpy as np
+from pathlib import Path
 
 fig = plt.figure(figsize=(14, 10))
 ax = fig.add_subplot(111)
@@ -279,7 +280,8 @@ for i, (color, label) in enumerate(colors_legend):
     ax.text(legend_x + i*2.2 + 0.25, legend_y - 0.04, label, fontsize=7, va='center')
 
 plt.tight_layout()
-plt.savefig('MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_16_system_architecture.png', 
+output_path = Path(__file__).parent / 'GENERATED_FIGURES' / 'figure_16_system_architecture.png'
+plt.savefig(str(output_path), 
             dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
 print("✓ Figure 16 (Enhanced System Architecture) generated successfully!")
 print("  Saved to: MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_16_system_architecture.png")

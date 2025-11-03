@@ -1,0 +1,82 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{owasp-llm01,liu-usenix24,bair-struq,secalign,defensivetokens,jailbreakbench}
+\@writefile{toc}{\contentsline {section}{Abstract}{1}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Contributions.}{1}{section*.2}\protected@file@percent }
+\citation{liu-usenix24,jailbreakbench}
+\citation{secalign}
+\citation{bair-struq}
+\citation{defensivetokens}
+\citation{owasp-llm01}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Patent-informed defense motifs and how our pipeline instantiates them.}}{2}{table.caption.3}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tab:patents}{{1}{2}{Patent-informed defense motifs and how our pipeline instantiates them}{table.caption.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work and Strategic Context}{2}{section.2}\protected@file@percent }
+\newlabel{sec:related}{{2}{2}{Related Work and Strategic Context}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Patent Landscape (Industry Signals)}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Methods: Multi-Phase Defense Program}{2}{section.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Baseline prompt-injection success rates by model and vector (RAG-borne, schema). The more instruction-following model shows markedly higher susceptibility.}}{3}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:baseline}{{1}{3}{Baseline prompt-injection success rates by model and vector (RAG-borne, schema). The more instruction-following model shows markedly higher susceptibility}{figure.caption.12}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Baseline vulnerability summary (ASR).}}{4}{table.caption.13}\protected@file@percent }
+\newlabel{tab:baseline}{{2}{4}{Baseline vulnerability summary (ASR)}{table.caption.13}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Detector TPR/FAR on P1 data: v1 (signature), v2 (heuristics), v3 (semantic). v1 achieves the highest TPR with near-zero FAR; v3 adds complementary coverage.}}{4}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:detectors}{{2}{4}{Detector TPR/FAR on P1 data: v1 (signature), v2 (heuristics), v3 (semantic). v1 achieves the highest TPR with near-zero FAR; v3 adds complementary coverage}{figure.caption.14}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Fusion strategies on P1: OR(v1,v3) yields 87\% TPR at 0\% FAR; AND reduces recall; majority adds little.}}{4}{table.caption.16}\protected@file@percent }
+\newlabel{tab:fusion}{{3}{4}{Fusion strategies on P1: OR(v1,v3) yields 87\% TPR at 0\% FAR; AND reduces recall; majority adds little}{table.caption.16}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Complementarity: v1 and v3 capture partially disjoint subsets; OR-fusion improves coverage without increasing FAR.}}{5}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:complementarity}{{3}{5}{Complementarity: v1 and v3 capture partially disjoint subsets; OR-fusion improves coverage without increasing FAR}{figure.caption.15}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Benign obfuscation false alarm rate (FAR) on 260 clean queries (P6a).}}{5}{table.caption.20}\protected@file@percent }
+\newlabel{tab:benign}{{4}{5}{Benign obfuscation false alarm rate (FAR) on 260 clean queries (P6a)}{table.caption.20}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Results}{5}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Baseline Vulnerability (P1)}{5}{subsection.4.1}\protected@file@percent }
+\newlabel{sec:baseline}{{4.1}{5}{Baseline Vulnerability (P1)}{subsection.4.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Detector Efficacy and Fusion (P2--P3)}{5}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Threshold Invariance (P4)}{5}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Learning and Normalization (P5--P6a)}{5}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Generalization and Adversaries (P6b--P6c)}{5}{subsection.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}System Architecture and Deployment}{5}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Principles.}{5}{section*.26}\protected@file@percent }
+\citation{bair-struq,secalign}
+\citation{jailbreakbench}
+\citation{secalign,bair-struq}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Threshold sweep: OR-fusion remains at 87/0 (TPR/FAR) across wide internal cutoffs, simplifying deployment.}}{6}{figure.caption.17}\protected@file@percent }
+\newlabel{fig:threshold}{{4}{6}{Threshold sweep: OR-fusion remains at 87/0 (TPR/FAR) across wide internal cutoffs, simplifying deployment}{figure.caption.17}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Recommended configurations. Production prioritizes precision (low FAR); Monitoring increases recall for audit and model improvement.}}{6}{table.caption.25}\protected@file@percent }
+\newlabel{tab:configs}{{5}{6}{Recommended configurations. Production prioritizes precision (low FAR); Monitoring increases recall for audit and model improvement}{table.caption.25}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion and Lessons}{6}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Limitations and Future Work}{6}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{6}{section.8}\protected@file@percent }
+\bibstyle{ACM-Reference-Format}
+\bibdata{prompt_injection_cacm}
+\bibcite{bair-struq}{{1}{2025}{{BAIR (Berkeley Artificial Intelligence Research)}}{{}}}
+\bibcite{jailbreakbench}{{2}{2024}{{Chao et~al\mbox  {.}}}{{}}}
+\bibcite{defensivetokens}{{3}{2025a}{{Chen et~al\mbox  {.}}}{{}}}
+\bibcite{secalign}{{4}{2025b}{{Chen et~al\mbox  {.}}}{{}}}
+\bibcite{liu-usenix24}{{5}{2024}{{Liu et~al\mbox  {.}}}{{}}}
+\bibcite{owasp-llm01}{{6}{2025}{{OWASP GenAI Security Project}}{{}}}
+\newlabel{tocindent-1}{0pt}
+\newlabel{tocindent0}{0pt}
+\newlabel{tocindent1}{4.185pt}
+\newlabel{tocindent2}{10.34999pt}
+\newlabel{tocindent3}{0pt}
+\newlabel{tocindent4}{0pt}
+\newlabel{tocindent5}{0pt}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Learning-based fusion (logistic) on P1 raises TPR from 87\% to 99\% (0\% FAR) via simple features atop v1/v3 outputs.}}{7}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:learning}{{5}{7}{Learning-based fusion (logistic) on P1 raises TPR from 87\% to 99\% (0\% FAR) via simple features atop v1/v3 outputs}{figure.caption.18}{}}
+\@writefile{toc}{\contentsline {section}{Acknowledgments}{7}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{7}{section*.30}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Benign inputs with obfuscation (P6a): Normalizer+\emph  {v3} yields \(\approx 0.77\%\) FAR; \emph  {v1} requires normalization to avoid false alarms on Unicode/homoglyph text.}}{8}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:obfuscation}{{6}{8}{Benign inputs with obfuscation (P6a): Normalizer+\emph {v3} yields \(\approx 0.77\%\) FAR; \emph {v1} requires normalization to avoid false alarms on Unicode/homoglyph text}{figure.caption.19}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Novel attack detection by category (P6b): multi-turn and context-confusion are hardest; overall TPR \(\approx \) 49.2\%.}}{8}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:novel}{{7}{8}{Novel attack detection by category (P6b): multi-turn and context-confusion are hardest; overall TPR \(\approx \) 49.2\%}{figure.caption.21}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Generalization gap: near-perfect on known (P5) vs. \(\sim \)50\% on novel (P6b).}}{9}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:gap}{{8}{9}{Generalization gap: near-perfect on known (P5) vs. \(\sim \)50\% on novel (P6b)}{figure.caption.22}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Adversarial prompts (P6c): multi-step evolution achieves highest evasion; paraphrasing is partially caught by semantic screening.}}{10}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:adversarial}{{9}{10}{Adversarial prompts (P6c): multi-step evolution achieves highest evasion; paraphrasing is partially caught by semantic screening}{figure.caption.23}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces LLM input-side pipeline: \textbf  {Normalizer} \(\rightarrow \) \textbf  {v1 Signature} \& \textbf  {v3 Semantic} (parallel) \(\rightarrow \) \textbf  {OR-fusion}. Block if malicious; otherwise forward to LLM/tooling. Adds $<\,$1\,ms latency on CPU.}}{11}{figure.caption.24}\protected@file@percent }
+\newlabel{fig:arch}{{10}{11}{LLM input-side pipeline: \textbf {Normalizer} \(\rightarrow \) \textbf {v1 Signature} \& \textbf {v3 Semantic} (parallel) \(\rightarrow \) \textbf {OR-fusion}. Block if malicious; otherwise forward to LLM/tooling. Adds $<\,$1\,ms latency on CPU}{figure.caption.24}{}}
+\newlabel{TotPages}{{11}{11}{}{page.11}{}}
+\gdef \@abspage@last{11}

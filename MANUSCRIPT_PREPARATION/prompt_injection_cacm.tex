@@ -1,0 +1,312 @@
+\documentclass[manuscript,screen]{acmart}
+
+% ====== Metadata ======
+\title{Prompt Injection Security: A Multi-Phase Defense Framework for Practitioners}
+\subtitle{From Patent Landscape to Deployable Input-Side Guardrails for LLM Systems}
+
+\author{Carlos Denner dos Santos, PhD}
+\affiliation{%
+  \institution{Videns, propelled by Cofomo}
+  \city{Montreal}
+  \country{Canada}
+}
+\email{carlos.denner@videns.ai}
+
+\renewcommand\shortauthors{Denner dos Santos}
+
+% CACM: numeric citations and ACM reference format
+\citestyle{acmnumeric}
+
+% Optional tidy packages (approved by ACM)
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{pifont}        % for checkmarks if needed
+\usepackage{siunitx}
+\sisetup{detect-all}
+\usepackage{microtype}
+\usepackage{enumitem}
+\setlist{nosep}
+
+% Reduce overly large figure whitespace a bit
+\setlength{\textfloatsep}{10pt plus 2pt minus 2pt}
+\setlength{\floatsep}{10pt plus 2pt minus 2pt}
+
+% ====== Document ======
+\begin{document}
+
+\begin{abstract}
+Prompt injection is listed by OWASP as the \emph{top} risk for LLM-integrated applications. We present a practitioner-oriented, multi-phase evaluation of \emph{input-side} defenses---normalization, signature rules, semantic detection, and fusion---culminating in a lightweight “LLM firewall.” Across eight phases, we (1) establish baseline vulnerability, (2) build and compare detectors, (3) fuse complementary signals, (4) harden against obfuscation via normalization, and (5) quantify generalization gaps on novel and adversarially crafted attacks. The resulting pipeline achieves high detection of known attacks with very low false alarms on benign inputs, is threshold-invariant, and adds negligible latency. We complement the experiments with a curated \emph{patent landscape} that motivated design choices and situates our approach within industry strategy. We close with actionable deployment recommendations for production and monitoring modes, and with lessons for research directions on multi-turn and context-confusion attacks.
+\end{abstract}
+
+\keywords{Prompt injection, LLM security, guardrails, normalization, fusion, patent analysis, obfuscation, generalization}
+
+% CCS Concepts
+\begin{CCSXML}
+<ccs2012>
+  <concept>
+    <concept_id>10002978.10003022</concept_id>
+    <concept_desc>Security and privacy~Intrusion detection systems</concept_desc>
+    <concept_significance>high</concept_significance>
+  </concept>
+  <concept>
+    <concept_id>10002978.10003006</concept_id>
+    <concept_desc>Security and privacy~Malware and its mitigation</concept_desc>
+    <concept_significance>high</concept_significance>
+  </concept>
+  <concept>
+    <concept_id>10010147.10010257</concept_id>
+    <concept_desc>Computing methodologies~Machine learning</concept_desc>
+    <concept_significance>medium</concept_significance>
+  </concept>
+  <concept>
+    <concept_id>10002978.10003025</concept_id>
+    <concept_desc>Security and privacy~Vulnerability management</concept_desc>
+    <concept_significance>high</concept_significance>
+  </concept>
+</ccs2012>
+\end{CCSXML}
+
+\maketitle
+
+\section{Introduction}
+Large Language Models (LLMs) enable powerful applications but are susceptible to \emph{prompt injection}---malicious inputs that coerce models to ignore policy, exfiltrate data, or execute unintended tools. Industrial guidance and academic studies have converged on the need for robust input-side defenses that vet prompts before the LLM processes them~\cite{owasp-llm01,liu-usenix24,bair-struq,secalign,defensivetokens,jailbreakbench}.
+
+This article reports a \emph{multi-phase} defense program conducted in a Retrieval-Augmented Generation (RAG) setting, guided by (i) a structured patent landscape we compiled (to capture emerging industrial patterns) and (ii) systematic experiments that incrementally build a deployable pipeline. We target Communications of the ACM’s Research \& Advances audience: practically minded professionals who demand concise results, figures and tables, and immediately deployable guidance.
+
+\paragraph{Contributions.}
+\begin{itemize}
+  \item A deployable input-side defense pipeline (``LLM firewall'') combining \emph{Normalization} + \emph{Signature} + \emph{Semantic} detectors with \emph{OR-fusion}, designed for near-zero false alarms.
+  \item An eight-phase evaluation quantifying baseline vulnerability, detector efficacy, threshold invariance, obfuscation robustness, and generalization to novel and adversarial prompts.
+  \item A \emph{patent landscape} synthesis showing convergent industry strategies (e.g., middleware sanitization, rule repositories, semantic screening, signed prompts), and how these informed our design choices.
+  \item Practitioner recommendations: a low-FAR Production mode and a higher-recall Monitoring mode; actionable lessons for multi-turn and context-confusion gaps.
+\end{itemize}
+
+\section{Related Work and Strategic Context}
+\label{sec:related}
+Formalizations and benchmarks now characterize prompt injection and defenses~\cite{liu-usenix24,jailbreakbench}. Academic defenses span training-time alignment (e.g., SecAlign)~\cite{secalign}, test-time instruction structuring (StruQ)~\cite{bair-struq}, and prompt-level robustness tokens~\cite{defensivetokens}. Practitioner guidance (e.g., OWASP LLM01) prioritizes guarding the \emph{input} side~\cite{owasp-llm01}.
+
+\subsection{Patent Landscape (Industry Signals)}
+Our curated patent analysis (2023--2025) reveals convergent patterns:
+\begin{itemize}
+  \item \textbf{Sanitizing middleware} that intercepts prompts pre-LLM to scrub injected instructions or structured payloads.
+  \item \textbf{Signature/rule repositories} maintained as knowledge bases of dangerous phrases, roles, and structural patterns.
+  \item \textbf{Semantic screens} using embeddings/similarity to known attack classes and contextual signals.
+  \item \textbf{Signed prompts/verification} to detect unauthorized instruction flow in responses.
+  \item \textbf{Layer or tool monitoring} (e.g., intermediate activations or tool-call audits) to flag anomalous prompt effects.
+\end{itemize}
+
+\begin{table}[t]
+  \caption{Patent-informed defense motifs and how our pipeline instantiates them.}
+  \label{tab:patents}
+  \centering
+  \begin{tabular}{@{}p{0.32\linewidth}p{0.62\linewidth}@{}}
+    \toprule
+    \textbf{Patent motif} & \textbf{Instantiation in our system} \\
+    \midrule
+    Sanitizing middleware & Normalizer (Unicode canonicalization, stripping zero-width, homoglyph mapping) \\
+    Signature/rule KB & v1 signature detector with curated prompt patterns \\
+    Semantic screening & v3 semantic detector via embedding similarity to attack exemplars \\
+    Fusion/ensembles & OR-fusion (v1\,\texttt{OR}\,v3) for threshold-free complementarity \\
+    Monitoring/telemetry & Dual mode: Production (low FAR) + Monitoring (higher recall for auditing) \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Methods: Multi-Phase Defense Program}
+We conducted eight phases (P1--P8) over RAG QA with two representative 7B LLMs (a more vulnerable and a more conservative baseline). Each phase isolates a design dimension.
+
+\subsection*{P1 Baseline Vulnerability}
+Attack battery across RAG-borne and schema/tooling vectors; measure attack success rate (ASR).
+
+\subsection*{P2 Detectors (v1/v2/v3)}
+v1: signature rules; v2: structured heuristics; v3: semantic similarity. Evaluate TPR/FAR.
+
+\subsection*{P3 Fusion}
+Logical AND/OR, majority vote, and logistic regression fusion; select operating point for high TPR and near-zero FAR.
+
+\subsection*{P4 Threshold Invariance}
+Stress thresholds and show OR-fusion yields parameter insensitivity.
+
+\subsection*{P5 Learning + Normalizer}
+Train simple logistic fusion; introduce Normalizer to defeat obfuscations (Unicode, homoglyphs, zero-width).
+
+\subsection*{P6 Generalization}
+Evaluate on novel (unseen) and adversarially crafted prompts; characterize coverage gaps (multi-turn, context confusion).
+
+\subsection*{P7 System Integration}
+Assemble the deployable pipeline; measure latency/overhead.
+
+\subsection*{P8 Execution Profile}
+Wall-clock and resource profiling for reproducibility and scaling.
+
+\section{Results}
+\subsection{Baseline Vulnerability (P1)}
+\label{sec:baseline}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig1_baseline_vulnerability.pdf}
+  \caption{Baseline prompt-injection success rates by model and vector (RAG-borne, schema). The more instruction-following model shows markedly higher susceptibility.}
+  \Description{Bar chart comparing attack success rates between LLaMA-2-7b and Falcon-7b models across RAG-borne and schema smuggling attack vectors.}
+  \label{fig:baseline}
+\end{figure}
+
+\begin{table}[t]
+  \caption{Baseline vulnerability summary (ASR).}
+  \label{tab:baseline}
+  \centering
+  \begin{tabular}{@{}lcc@{}}
+    \toprule
+    \textbf{Model} & \textbf{RAG-borne ASR (\%)} & \textbf{Schema ASR (\%)} \\
+    \midrule
+    Model A (7B) & 65.0 & 31.6 \\
+    Model B (7B) & 5.0 & 26.3 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Detector Efficacy and Fusion (P2--P3)}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig4_detector_performance.pdf}
+  \caption{Detector TPR/FAR on P1 data: v1 (signature), v2 (heuristics), v3 (semantic). v1 achieves the highest TPR with near-zero FAR; v3 adds complementary coverage.}
+  \Description{Grouped bar chart showing True Positive Rate and False Alarm Rate for three detector versions.}
+  \label{fig:detectors}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig6_complementarity.pdf}
+  \caption{Complementarity: v1 and v3 capture partially disjoint subsets; OR-fusion improves coverage without increasing FAR.}
+  \Description{Stacked bar chart illustrating detector complementarity showing attacks caught by v1 only, v3 only, both detectors, and missed attacks.}
+  \label{fig:complementarity}
+\end{figure}
+
+\begin{table}[t]
+  \caption{Fusion strategies on P1: OR(v1,v3) yields 87\% TPR at 0\% FAR; AND reduces recall; majority adds little.}
+  \label{tab:fusion}
+  \centering
+  \begin{tabular}{@{}lcc@{}}
+    \toprule
+    \textbf{Fusion} & \textbf{TPR (\%)} & \textbf{FAR (\%)} \\
+    \midrule
+    AND(v1,v3) & 55.5 & 0.0 \\
+    OR(v1,v3) & \textbf{87.0} & \textbf{0.0} \\
+    Majority(v1,v2,v3) & 60.0 & 0.0 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Threshold Invariance (P4)}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig7_threshold_invariance.pdf}
+  \caption{Threshold sweep: OR-fusion remains at 87/0 (TPR/FAR) across wide internal cutoffs, simplifying deployment.}
+  \Description{Line plot showing TPR and FAR performance as detection thresholds vary, demonstrating threshold-invariant behavior.}
+  \label{fig:threshold}
+\end{figure}
+
+\subsection{Learning and Normalization (P5--P6a)}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig9_learning_gain.pdf}
+  \caption{Learning-based fusion (logistic) on P1 raises TPR from 87\% to 99\% (0\% FAR) via simple features atop v1/v3 outputs.}
+  \Description{Bar chart comparing TPR improvement from baseline OR-fusion to learned logistic fusion while maintaining zero FAR.}
+  \label{fig:learning}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig10_obfuscation_fpr.pdf}
+  \caption{Benign inputs with obfuscation (P6a): Normalizer+\emph{v3} yields \(\approx 0.77\%\) FAR; \emph{v1} requires normalization to avoid false alarms on Unicode/homoglyph text.}
+  \Description{Heatmap showing False Alarm Rate across obfuscation types and detector configurations, demonstrating importance of normalization.}
+  \label{fig:obfuscation}
+\end{figure}
+
+\begin{table}[t]
+  \caption{Benign obfuscation false alarm rate (FAR) on 260 clean queries (P6a).}
+  \label{tab:benign}
+  \centering
+  \begin{tabular}{@{}lS[table-format=2.2]@{}}
+    \toprule
+    \textbf{Configuration} & \textbf{FAR (\%)} \\
+    \midrule
+    v1 (no norm) & 23.10 \\
+    v3 (no norm) & \textbf{0.77} \\
+    v1+v3 (no norm) & 23.80 \\
+    Normalizer+v1 & 11.50 \\
+    \textbf{Normalizer+v3} & \textbf{0.77} \\
+    Normalizer+v1+v3 & 12.30 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Generalization and Adversaries (P6b--P6c)}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig11_novel_attack_tpr.pdf}
+  \caption{Novel attack detection by category (P6b): multi-turn and context-confusion are hardest; overall TPR \(\approx\) 49.2\%.}
+  \Description{Horizontal bar chart showing TPR for novel attack categories including multi-turn, context-confusion, paraphrasing, and direct injection attacks.}
+  \label{fig:novel}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig15_generalization_gap.pdf}
+  \caption{Generalization gap: near-perfect on known (P5) vs. \(\sim\)50\% on novel (P6b).}
+  \Description{Bar chart comparing detection performance on known attacks versus novel unseen attacks, illustrating the generalization gap.}
+  \label{fig:gap}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig13_adversarial_evasion.pdf}
+  \caption{Adversarial prompts (P6c): multi-step evolution achieves highest evasion; paraphrasing is partially caught by semantic screening.}
+  \Description{Horizontal bar chart showing evasion rates for different adversarial techniques including multi-step evolution, semantic paraphrasing, and obfuscation.}
+  \label{fig:adversarial}
+\end{figure}
+
+\section{System Architecture and Deployment}
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{fig16_architecture.pdf}
+  \caption{LLM input-side pipeline: \textbf{Normalizer} \(\rightarrow\) \textbf{v1 Signature} \& \textbf{v3 Semantic} (parallel) \(\rightarrow\) \textbf{OR-fusion}. Block if malicious; otherwise forward to LLM/tooling. Adds $<\,$1\,ms latency on CPU.}
+  \Description{System architecture diagram showing the complete input-side detection pipeline from user input through Normalizer, parallel detectors, OR-fusion logic, and decision point for blocking or forwarding to LLM processing.}
+  \label{fig:arch}
+\end{figure}
+
+\begin{table}[t]
+  \caption{Recommended configurations. Production prioritizes precision (low FAR); Monitoring increases recall for audit and model improvement.}
+  \label{tab:configs}
+  \centering
+  \begin{tabular}{@{}lccc@{}}
+    \toprule
+    \textbf{Mode} & \textbf{Components} & \textbf{TPR (known)} & \textbf{FAR (benign)} \\
+    \midrule
+    Production & Normalizer + v3 & 87\% & \(\approx\)0.77\% \\
+    Monitoring & Normalizer + v1 + v3 & 87\% (known), 49\% (novel) & \(\approx\)12\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Principles.}
+(1) \emph{Intercept} inputs pre-LLM; (2) \emph{Normalize} first; (3) combine \emph{complementary} signals; (4) prefer \emph{threshold-free} fusion; (5) keep it \emph{lightweight} for real-time use.
+
+\section{Discussion and Lessons}
+Simple signatures (v1) are surprisingly strong on known attacks, but semantic screening (v3) is essential for robustness to rephrasing. OR-fusion provides a sweet spot (high TPR, near-zero FAR) with no threshold tuning. Normalization is non-negotiable for Unicode/homoglyph safety. The principal gaps are multi-turn and context-confusion attacks, which suggest adding conversational state analysis or training-time structured defenses (e.g., StruQ/SecAlign)~\cite{bair-struq,secalign}.
+
+\section{Limitations and Future Work}
+We tested English single-turn prompts in a RAG QA setting with two 7B models; multilingual and larger models remain future work. Extending detectors with dialogue-state features and incremental learning on newly observed attacks (via Monitoring mode telemetry) is a promising path. Cross-benchmark comparisons (e.g., JailbreakBench)~\cite{jailbreakbench} and hybrid approaches with alignment~\cite{secalign,bair-struq} are also warranted.
+
+\section{Conclusion}
+A practical, deployable input-side pipeline can substantially raise the bar against prompt injection with minimal overhead. Our multi-phase program---guided by industry patents and academic evidence---yields a firewall that is fast, precise, and extensible. The community should iterate jointly on signature corpora, semantic exemplars, and stateful detection to close the remaining multi-turn/context gaps.
+
+\begin{acks}
+We thank colleagues and reviewers for feedback, and the open-source LLM community for tools and benchmarks. 
+\end{acks}
+
+% ====== References (CACM numeric style via BibTeX) ======
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{prompt_injection_cacm}
+
+\end{document}
