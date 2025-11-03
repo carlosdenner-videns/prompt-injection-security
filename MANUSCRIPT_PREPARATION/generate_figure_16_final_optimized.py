@@ -11,10 +11,10 @@ import matplotlib.lines as mlines
 import numpy as np
 from pathlib import Path
 
-fig = plt.figure(figsize=(16, 11))
+fig = plt.figure(figsize=(16, 10.2))
 ax = fig.add_subplot(111)
 ax.set_xlim(0, 16)
-ax.set_ylim(0, 11)
+ax.set_ylim(0, 10.2)
 ax.axis('off')
 
 # ============================================================================
@@ -155,14 +155,6 @@ ax.text(decision_x + 0.75, fusion_y + 0.15, 'DECISION', ha='center', va='center'
 ax.text(decision_x + 0.75, fusion_y - 0.15, 'Attack/Benign', ha='center', va='center', 
         fontsize=8, color='white')
 
-# Arrow BLOCKED (downward)
-arrow_blocked = FancyArrowPatch((decision_x + 0.75, fusion_y - 0.45), (decision_x + 0.75, fusion_y - 1.0), 
-                                arrowstyle='->', mutation_scale=25, linewidth=2.5, 
-                                color='#B71C1C', linestyle='--')
-ax.add_patch(arrow_blocked)
-ax.text(decision_x + 1.2, fusion_y - 0.7, 'BLOCKED', ha='left', fontsize=8, fontweight='bold', 
-        color='#B71C1C')
-
 # Arrow ALLOWED (rightward)
 arrow_allowed = FancyArrowPatch((decision_x + 1.5, fusion_y), (decision_x + 2.5, fusion_y), 
                                 arrowstyle='->', mutation_scale=25, linewidth=2.5, 
@@ -192,6 +184,14 @@ y_example = 7.4
 # Title for example
 ax.text(0.6, y_example_title, 'Example: Attack Processing Flow', fontsize=10, fontweight='bold', 
         color='#E65100')
+
+# Arrow BLOCKED (downward) - Extended to reach example box
+arrow_blocked = FancyArrowPatch((decision_x + 0.75, fusion_y - 0.45), (decision_x + 0.75, y_example - 1.6), 
+                                arrowstyle='->', mutation_scale=25, linewidth=2.5, 
+                                color='#B71C1C', linestyle='--')
+ax.add_patch(arrow_blocked)
+ax.text(decision_x + 1.2, fusion_y - 0.7, 'BLOCKED', ha='left', fontsize=8, fontweight='bold', 
+        color='#B71C1C')
 
 # Example box - tighter spacing
 example_box = FancyBboxPatch((0.5, y_example - 1.6), 15.0, 1.6, boxstyle="round,pad=0.1",
@@ -295,19 +295,17 @@ details_lines = [
     'Signature Detector (v1):',
     '  • 80% TPR, 0% FAR',
     '  • Keyword matching',
-    '',
     'Semantic Detector (v3):',
     '  • 57% TPR, 0% FAR',
     '  • Pattern analysis',
-    '',
     'Fusion: OR Logic (v1+v3)',
     '  • Combined: 87% TPR, 0% FAR'
 ]
 
-y_pos = y_metrics - 0.25
+y_pos = y_metrics - 0.2
 for line in details_lines:
     ax.text(8.5, y_pos, line, fontsize=7.5, family='monospace', verticalalignment='top', ha='left')
-    y_pos -= 0.16
+    y_pos -= 0.18
 
 # ============================================================================
 # SECTION 4: KEY DESIGN PRINCIPLES - BETTER SPACING & ANCHORING
@@ -337,7 +335,7 @@ for line in principles_lines:
 # ============================================================================
 # LEGEND - CLOSER TO PRINCIPLES BOX
 # ============================================================================
-legend_y = 0.95
+legend_y = 0.75
 ax.text(0.5, legend_y, 'Legend:', fontsize=8, fontweight='bold')
 
 colors_legend = [
@@ -350,11 +348,12 @@ colors_legend = [
 ]
 
 legend_x = 1.4
+legend_spacing = 2.1  # Increased spacing between legend items
 for i, (color, label) in enumerate(colors_legend):
-    rect = Rectangle((legend_x + i*1.95, legend_y - 0.08), 0.12, 0.08, 
+    rect = Rectangle((legend_x + i*legend_spacing, legend_y - 0.08), 0.12, 0.08, 
                      facecolor=color, edgecolor=color_border, linewidth=1)
     ax.add_patch(rect)
-    ax.text(legend_x + i*1.95 + 0.2, legend_y - 0.04, label, fontsize=7, va='center')
+    ax.text(legend_x + i*legend_spacing + 0.2, legend_y - 0.04, label, fontsize=7, va='center')
 
 plt.tight_layout()
 output_path = Path(__file__).parent / 'GENERATED_FIGURES' / 'figure_16_system_architecture.png'
