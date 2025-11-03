@@ -63,7 +63,13 @@
 | **Attacks Caught** | 198/200 | — |
 | **Attacks Missed** | 2/200 | — |
 
-*See Figure 8: Learned Fusion (Nested CV) & Figure 9: Lift Over Baseline*
+![Figure 8: Learned Fusion (Nested CV)](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_8_learned_fusion_cv.png)
+
+**Figure 8: Learned Fusion Performance (Nested CV).** Box plot with confidence intervals showing nested cross-validation results across 5 folds. Mean TPR is 99% with 95% CI [95%, 100%], demonstrating consistent performance across folds with no overfitting to specific folds.
+
+![Figure 9: Lift Over Baseline](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_9_lift_baseline.png)
+
+**Figure 9: Lift Over Baseline (Phase 3 → Phase 5).** Bar chart showing improvement from Phase 3 (87% TPR) to Phase 5 (99% TPR), representing a +12 percentage point improvement and +24 additional attacks caught.
 
 **Lift vs Phase 3 Baseline:**
 - Phase 3 (v1+v3): 87% TPR
@@ -129,7 +135,9 @@ Validate that the system does NOT mistakenly flag benign queries with obfuscatio
 | v1+v3 | 23.8% | ❌ Too high |
 | Normalizer+v1+v3 | 12.3% | ⚠️ Moderate |
 
-*See Figure 10: FAR by Configuration and Obfuscation Type*
+![Figure 10: FAR by Configuration and Obfuscation Type](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_10_far_heatmap.png)
+
+**Figure 10: FAR by Configuration and Obfuscation Type.** 2D heatmap showing FAR across 6 configurations and 8 obfuscation types. Normalizer+v3 achieves 0.77% FAR (goal achieved), with homoglyph handling improved from 100% FAR to 0% FAR through normalizer processing.
 
 **FAR by Obfuscation Type (Normalizer+v3):**
 
@@ -211,7 +219,13 @@ Evaluate how well the system detects prompt injection attacks NOT seen in Phase 
 | v1+v3 | 49.2% | ⚠️ Near goal |
 | **Normalizer+v1+v3** | **49.2%** | **⚠️ NEAR GOAL** |
 
-*See Figure 11: TPR by Attack Type & Figure 12: Coverage Gaps*
+![Figure 11: TPR by Attack Type](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_11_tpr_attack_type.png)
+
+**Figure 11: TPR by Attack Type (Novel Attacks).** Horizontal bar chart showing detection rate for 6 novel attack types. Instruction embedding achieves 95% TPR (best), while context confusion achieves only 25% TPR (worst), revealing critical coverage gaps.
+
+![Figure 12: Coverage Gaps](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_12_coverage_gaps.png)
+
+**Figure 12: Coverage Gaps by Attack Type.** Stacked bar chart showing coverage vs gaps for each novel attack type. Multi-turn manipulation (40% TPR) and context confusion (25% TPR) represent critical gaps requiring future work.
 
 **TPR by Attack Type (Normalizer+v1+v3):**
 
@@ -291,7 +305,9 @@ Evaluate system robustness against adversarial attacks designed to evade detecti
 | Normalizer+v3 | 53.1% | ⚠️ Moderate |
 | Normalizer+v1+v3 | 53.1% | ⚠️ Moderate |
 
-*See Figure 13: Adversarial Technique Effectiveness*
+![Figure 13: Adversarial Techniques](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_13_adversarial_techniques.png)
+
+**Figure 13: Adversarial Technique Effectiveness.** Horizontal bar chart showing evasion rates for 5 adversarial techniques. Multi-step instructions achieve 75% evasion (most effective), while paraphrasing achieves 60% evasion (least effective).
 
 **Adversarial Technique Effectiveness:**
 
@@ -344,7 +360,13 @@ Evaluate system robustness against adversarial attacks designed to evade detecti
 | 6b | Normalizer+v1+v3 | 49.2% | 12.3% | — | Novel attacks | Fig 11-12 |
 | 6c | Normalizer+v1+v3 | 53.1% | — | — | Adversarial attacks | Fig 13 |
 
-*See Figure 14: Cross-Phase Performance Progression & Figure 15: Generalization Gap Analysis*
+![Figure 14: Performance Progression](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_14_performance_progression.png)
+
+**Figure 14: Cross-Phase Performance Progression.** Line chart showing TPR across all 8 phases. Performance improves from 65% (Phase 1) to 87% (Phase 3) to 99% (Phase 5), then drops to 49.2% (Phase 6b) on novel attacks, revealing the generalization gap.
+
+![Figure 15: Generalization Gap](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_15_generalization_gap.png)
+
+**Figure 15: Generalization Gap Analysis.** Grouped bar chart highlighting performance drop from Phase 1 (87% TPR) to novel attacks (49.2% TPR) and adversarial attacks (53.1% TPR), revealing a 50 percentage point gap between known and novel attacks.
 
 ### Key Observations
 
@@ -374,6 +396,10 @@ Evaluate system robustness against adversarial attacks designed to evade detecti
 ---
 
 ## CONCLUSIONS & RECOMMENDATIONS
+
+![Figure 16: System Architecture](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_16_system_architecture.png)
+
+**Figure 16: System Architecture - Prompt Injection Detection Pipeline.** Flow diagram showing data flow through system components: Input → Normalizer → Detectors (v1, v2, v3) → Fusion (OR Logic) → Decision. Includes performance metrics (87% TPR, 0.77% FAR, <0.1ms latency) and data flow examples.
 
 ### Production Deployment
 
@@ -420,6 +446,9 @@ Evaluate system robustness against adversarial attacks designed to evade detecti
 | **Obfuscation Handling** | 0.77% FAR (Normalizer+v3) | ✅ Safe for Production |
 | **Novel Attack Coverage** | 49.2% TPR | ⚠️ Identified Gap |
 | **Adversarial Robustness** | 53.1% TPR | ⚠️ Moderate |
+| **Feature Importance** | v1.is_attack (0.45), v3.is_attack (0.35) | ✅ Dominant Features |
+| **Deployment Comparison** | Normalizer+v3 (production), Normalizer+v1+v3 (monitoring) | ✅ Recommended Configurations |
+| **Execution Timeline** | ~7.33 hours (Phase 1: 4.0 hours, other phases: 0.25-0.75 hours) | ✅ Efficient Execution |
 
 ### Publication Readiness
 

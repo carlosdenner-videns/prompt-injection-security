@@ -90,7 +90,9 @@ Establish baseline vulnerability metrics for prompt injection attacks across two
 
 **Key Finding:** LLaMA-2 is 13x more vulnerable.
 
-*See Figure 1: Attack Success Rate Comparison*
+![Figure 1: Attack Success Rate Comparison](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_1_asr_comparison.png)
+
+**Figure 1: Attack Success Rate Comparison.** Bar chart showing vulnerability comparison between LLaMA-2-7b (65% RAG-borne, 31.58% schema smuggling) and Falcon-7b (5% RAG-borne, 26.32% schema smuggling). LLaMA-2 is 13x more vulnerable to RAG-borne injection attacks.
 
 **Vulnerability by Evasion Type (LLaMA-2-7b):**
 
@@ -105,7 +107,9 @@ Establish baseline vulnerability metrics for prompt injection attacks across two
 | urgency_manipulation | 10 | 2 | 20.00% |
 | homoglyph | 14 | 0 | 0.00% |
 
-*See Figure 2: Evasion Technique Effectiveness Heatmap*
+![Figure 2: Evasion Technique Effectiveness Heatmap](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_2_evasion_heatmap.png)
+
+**Figure 2: Evasion Technique Effectiveness Heatmap.** 2D heatmap showing effectiveness of 8 evasion techniques across LLaMA-2-7b and Falcon-7b. Plain text, delimiter, and role confusion attacks achieve 100% success on LLaMA-2, while homoglyph and unicode obfuscation are completely ineffective (0%) on both models.
 
 **Vulnerability by Evasion Type (Falcon-7b):**
 
@@ -149,6 +153,12 @@ Establish baseline vulnerability metrics for prompt injection attacks across two
 | db_query | Falcon-7b | 6 | 3 | 50.00% |
 | send_email | LLaMA-2-7b | 29 | 6 | 20.69% |
 | send_email | Falcon-7b | 29 | 4 | 13.79% |
+
+![Figure 3: Schema Smuggling by Tool](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_3_schema_smuggling.png)
+
+**Figure 3: Schema Smuggling Vulnerability by Tool.** Grouped bar chart showing vulnerability of three tools to schema smuggling attacks. HTTP GET endpoints are universally vulnerable (100%), database queries show 50% vulnerability, and email validation is relatively strong (13-21% vulnerability).
+
+**Observations:**
 
 ### Phase 1 Data Files
 
@@ -218,7 +228,9 @@ Develop and evaluate three iterative input-side detectors (v1, v2, v3) that scan
 | **Precision** | 100.0% | 100.0% | 100.0% |
 | **F1 Score** | 0.8889 | 0.6111 | 0.7261 |
 
-*See Figure 4: Detector Performance Comparison & Figure 17: Confusion Matrices*
+![Figure 4: Detector Performance Comparison](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_4_detector_performance.png)
+
+**Figure 4: Detector Performance Comparison.** Grouped bar chart with error bars showing TPR and FAR for v1, v2, and v3 detectors with 95% Wilson confidence intervals. v1 (signature-based) achieves 80% TPR with 0% FAR, outperforming v2 (44% TPR) and v3 (57% TPR).
 
 **McNemar's Test Results:**
 
@@ -240,6 +252,10 @@ Develop and evaluate three iterative input-side detectors (v1, v2, v3) that scan
 |------|---------|
 | phase2_input_detection_results.csv | Detailed per-sample results |
 | input_detection_metrics.csv | Aggregated metrics |
+
+![Figure 17: Confusion Matrices](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_17_confusion_matrices.png)
+
+**Figure 17: Confusion Matrices (Phase 2 Detectors).** Three confusion matrices showing TP, FP, TN, FN for v1, v2, and v3 detectors. v1 achieves 90% accuracy with 160 TP and 0 FP. v2 achieves 72% accuracy, and v3 achieves 78.5% accuracy.
 
 ---
 
@@ -284,7 +300,9 @@ is_attack = (v1.is_attack + v2.is_attack + v3.is_attack) >= 2
 | v1+v2+v3 (MAJORITY) | 80.0% | 0.0% | 0.8889 | Same as v1 |
 | v1+v2+v3 (WEIGHTED) | 85.0% | 0.0% | 0.9167 | Good but worse |
 
-*See Figure 5: Fusion Strategy Comparison*
+![Figure 5: Fusion Strategy Comparison](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_5_fusion_comparison.png)
+
+**Figure 5: Fusion Strategy Comparison.** Scatter plot showing TPR vs FAR for 10 fusion configurations. v1+v3 (OR fusion) is optimal at 87% TPR, 0% FAR (highlighted in red). AND fusion is too conservative (44% TPR), while WEIGHTED fusion achieves 85% TPR but is suboptimal compared to v1+v3.
 
 **Optimal Configuration:** v1+v3 (OR Fusion)
 - TPR: 87.0% (174/200 injected)
@@ -299,7 +317,9 @@ is_attack = (v1.is_attack + v2.is_attack + v3.is_attack) >= 2
 | v3 | 114/200 (57%) | 0 attacks |
 | v1+v3 | 174/200 (87%) | 14 attacks |
 
-*See Figure 6: Detector Complementarity*
+![Figure 6: Detector Complementarity](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_6_complementarity.png)
+
+**Figure 6: Detector Complementarity Analysis.** Stacked bar chart showing how v1 and v3 catch different attacks. v1 alone catches 160/200 (80%), v3 alone catches 114/200 (57%), but together (v1+v3) catch 174/200 (87%) through complementary strengths.
 
 **Why v1+v3 Works:**
 - v1 catches: Plain text, delimiters, role confusion, urgency
@@ -340,7 +360,9 @@ Evaluate how varying confidence thresholds affect TPR/FAR tradeoffs for the v1+v
 | ... | ... | ... | ... |
 | 0.75 | 87.0% | 0.0% | 0.9305 |
 
-*See Figure 7: Threshold Robustness*
+![Figure 7: Threshold Robustness](MANUSCRIPT_PREPARATION/GENERATED_FIGURES/figure_7_threshold_robustness.png)
+
+**Figure 7: Threshold Robustness (Threshold-Invariant Performance).** Line chart showing TPR and FAR across 15 thresholds (0.05-0.75). All thresholds yield identical metrics (87% TPR, 0% FAR), demonstrating threshold-invariant performance due to binary OR fusion logic.
 
 **Explanation:** OR-fusion uses binary is_attack flags (not continuous scores)
 - v1 returns: is_attack=True/False (binary)
