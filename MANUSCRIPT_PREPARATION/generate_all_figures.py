@@ -48,11 +48,11 @@ try:
     llama_data = data.iloc[0, 1:].values.astype(float)
     falcon_data = data.iloc[1, 1:].values.astype(float)
     
-    ax.bar(x - width/2, llama_data, width, label='LLaMA-2-7b', color='#1f77b4')
-    ax.bar(x + width/2, falcon_data, width, label='Falcon-7b', color='#ff7f0e')
+    ax.bar(x - width/2, llama_data, width, label='LLaMA-2-7B', color='#1f77b4')
+    ax.bar(x + width/2, falcon_data, width, label='Falcon-7B', color='#ff7f0e')
     
     ax.set_ylabel('Attack Success Rate (%)')
-    ax.set_title('Figure 1: Attack Success Rate Comparison')
+    ax.set_title('Attack Success Rate Comparison')
     ax.set_xticks(x)
     ax.set_xticklabels(data.columns[1:])
     ax.legend()
@@ -101,8 +101,8 @@ try:
     llama_data = data.iloc[0, 1:].values.astype(float)
     falcon_data = data.iloc[1, 1:].values.astype(float)
     
-    ax.bar(x - width/2, llama_data, width, label='LLaMA-2-7b', color='#1f77b4')
-    ax.bar(x + width/2, falcon_data, width, label='Falcon-7b', color='#ff7f0e')
+    ax.bar(x - width/2, llama_data, width, label='LLaMA-2-7B', color='#1f77b4')
+    ax.bar(x + width/2, falcon_data, width, label='Falcon-7B', color='#ff7f0e')
     
     ax.set_ylabel('Attack Success Rate (%)')
     ax.set_title('Figure 3: Schema Smuggling Vulnerability by Tool')
@@ -218,7 +218,7 @@ try:
     
     ax.set_xlabel('Threshold')
     ax.set_ylabel('Percentage (%)')
-    ax.set_title('Figure 7: Threshold Robustness (Threshold-Invariant Performance)')
+    ax.set_title('Threshold Robustness (Threshold-Invariant Performance)')
     ax.legend()
     ax.grid(True, alpha=0.3)
     
@@ -326,7 +326,7 @@ try:
     
     ax.barh(attack_types, tpr, color=colors, alpha=0.7, edgecolor='black')
     ax.set_xlabel('TPR (%)')
-    ax.set_title('Figure 11: TPR by Attack Type (Novel Attacks)')
+    ax.set_title('TPR by Attack Type (Novel Attacks)')
     ax.set_xlim([0, 100])
     ax.grid(axis='x', alpha=0.3)
     

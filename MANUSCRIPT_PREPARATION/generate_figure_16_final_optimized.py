@@ -252,7 +252,7 @@ ax.text(9.3, y_example - 1.05, 'BLOCKED', ha='center', va='center',
         fontsize=7, family='monospace', color='white')
 
 # Performance metrics
-perf_text = 'Performance: Production 82% TPR, Monitoring 87% TPR  |  0.77% FAR  |  <1ms latency (GPU)'
+perf_text = 'Performance: Production 82% TPR, Monitoring 87% TPR  |  FAR: Prod ≈0.77%, Mon ≈12%  |  <1ms (GPU)'
 ax.text(0.7, y_example - 1.5, perf_text, fontsize=8, style='italic', 
         color='#E65100', fontweight='bold')
 
@@ -299,7 +299,7 @@ details_lines = [
     '  • 82% TPR, 0% FAR (P1)',
     '  • Pattern analysis',
     'Fusion: OR Logic (v1+v3)',
-    '  • Monitoring: 87% TPR, 0% FAR'
+    '  • Monitoring: 87% TPR'
 ]
 
 y_pos = y_metrics - 0.2
