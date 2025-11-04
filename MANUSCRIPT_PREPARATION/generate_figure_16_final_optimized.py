@@ -252,7 +252,7 @@ ax.text(9.3, y_example - 1.05, 'BLOCKED', ha='center', va='center',
         fontsize=7, family='monospace', color='white')
 
 # Performance metrics
-perf_text = 'Performance: 87% TPR on known attacks  |  0.77% FAR on benign  |  <1ms latency (GPU)'
+perf_text = 'Performance: Production 82% TPR, Monitoring 87% TPR  |  0.77% FAR  |  <1ms latency (GPU)'
 ax.text(0.7, y_example - 1.5, perf_text, fontsize=8, style='italic', 
         color='#E65100', fontweight='bold')
 
@@ -270,7 +270,7 @@ ax.text(4.15, y_metrics + 0.15, 'Production Configuration: Normalizer + v3',
         fontsize=9, fontweight='bold', color='#0D47A1', ha='center')
 
 metrics_lines_left = [
-    'True Positive Rate (TPR): 87%',
+    'True Positive Rate (TPR): 82%',
     'False Alarm Rate (FAR): 0.77%',
     'Latency: <1ms per sample (GPU)',
     'Complexity: ~1,200 lines',
@@ -293,13 +293,13 @@ ax.text(11.85, y_metrics + 0.15, 'Component Specifications', fontsize=9, fontwei
 
 details_lines = [
     'Signature Detector (v1):',
-    '  • 80% TPR, 0% FAR',
+    '  • 89% TPR, 0% FAR (P1)',
     '  • Keyword matching',
     'Semantic Detector (v3):',
-    '  • 57% TPR, 0% FAR',
+    '  • 82% TPR, 0% FAR (P1)',
     '  • Pattern analysis',
     'Fusion: OR Logic (v1+v3)',
-    '  • Combined: 87% TPR, 0% FAR'
+    '  • Monitoring: 87% TPR, 0% FAR'
 ]
 
 y_pos = y_metrics - 0.2
@@ -356,10 +356,14 @@ for i, (color, label) in enumerate(colors_legend):
     ax.text(legend_x + i*legend_spacing + 0.2, legend_y - 0.04, label, fontsize=7, va='center')
 
 plt.tight_layout()
-output_path = Path(__file__).parent / 'GENERATED_FIGURES' / 'figure_16_system_architecture.png'
-plt.savefig(str(output_path), dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+# Save both PNG and PDF
+output_path_png = Path(__file__).parent / 'GENERATED_FIGURES' / 'figure_16_system_architecture.png'
+output_path_pdf = Path(__file__).parent / 'fig16_architecture.pdf'
+plt.savefig(str(output_path_png), dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+plt.savefig(str(output_path_pdf), dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
 print("✓ Figure 16 (Final Optimized - Bottom Half) generated successfully!")
-print(f"  Saved to: {output_path}")
+print(f"  PNG: {output_path_png}")
+print(f"  PDF: {output_path_pdf}")
 print("\nBottom Half Improvements:")
 print("  ✓ Gray box titles centered within boxes")
 print("  ✓ Gray box text properly left-aligned and anchored")
