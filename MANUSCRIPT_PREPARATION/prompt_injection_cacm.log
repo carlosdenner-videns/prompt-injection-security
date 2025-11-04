@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.3)  4 NOV 2025 09:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.3)  4 NOV 2025 09:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1277,13 +1277,13 @@ Package pdftex.def Info: fig13_adversarial_evasion.pdf  used on input line 332.
 
 
 [11.11 <./fig9_learning_gain.pdf>]
-<fig16_architecture.pdf, id=512, 1149.09305pt x 787.74298pt>
+<fig16_architecture.pdf, id=512, 1149.09305pt x 735.22678pt>
 File: fig16_architecture.pdf Graphic file (type pdf)
 <use fig16_architecture.pdf>
 Package pdftex.def Info: fig16_architecture.pdf  used on input line 346.
-(pdftex.def)             Requested size: 430.00462pt x 294.78987pt.
+(pdftex.def)             Requested size: 430.00462pt x 275.1372pt.
 
-Underfull \vbox (badness 5147) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
@@ -1298,21 +1298,21 @@ LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 5.5pt on input line 402.
 
+
+[14.14 <./fig15_generalization_gap.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-[14.14 <./fig15_generalization_gap.pdf>]
-Underfull \vbox (badness 1097) has occurred while \output is active []
-
-
-
 [15.15 <./fig13_adversarial_evasion.pdf>]
-Underfull \vbox (badness 1389) has occurred while \output is active []
+Underfull \vbox (badness 4608) has occurred while \output is active []
 
 
 
 [16.16 <./fig16_architecture.pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 [17.17]
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1362,10 +1362,10 @@ Package rerunfilecheck Info: File `prompt_injection_cacm.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  25872 strings out of 468080
- 484133 string characters out of 5425772
- 923865 words of memory out of 5000000
+ 484127 string characters out of 5425772
+ 923916 words of memory out of 5000000
  53368 multiletter control sequences out of 15000+600000
- 800882 words of font info for 447 fonts, out of 8000000 for 9000
+ 800892 words of font info for 447 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  90i,12n,131p,1412b,1281s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/inconsolata/
@@ -1381,9 +1381,9 @@ pe1/public/newtx/NewTXMI.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/font
 s/type1/public/newtx/NewTXMI7.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX
 /fonts/type1/public/newtx/txmiaX.pfb><C:/Users/carlo/AppData/Local/Programs/MiK
 TeX/fonts/type1/public/newtx/txsys.pfb>
-Output written on prompt_injection_cacm.pdf (21 pages, 855116 bytes).
+Output written on prompt_injection_cacm.pdf (21 pages, 2521653 bytes).
 PDF statistics:
- 1269 PDF objects out of 1440 (max. 8388607)
+ 992 PDF objects out of 1000 (max. 8388607)
  107 named destinations out of 1000 (max. 500000)
  86739 words of extra memory for PDF output out of 89155 (max. 10000000)
 
