@@ -1,4 +1,6 @@
 \documentclass[manuscript,screen]{acmart}
+% Note: CACM will re-typeset with their production class during publication
+% The 'manuscript,screen' options are for author review only
 
 % ====== Metadata ======
 \title{Building an LLM Firewall: A Multi-Phase Defense Against Prompt Injection}
@@ -36,10 +38,8 @@
 \begin{document}
 
 \begin{abstract}
-Large Language Models (LLMs) are vulnerable to prompt injection, a technique where malicious inputs manipulate them into producing harmful or unauthorized outputs. This risk is so severe that OWASP now ranks it as the number one threat for LLM applications. We present a practitioner-oriented, multi-phase evaluation of \emph{input-side} defenses---including prompt normalization, rule-based detection, semantic embedding detection, and their combination---culminating in a lightweight "LLM firewall" system. Across eight phases, we establish baseline vulnerability, build and compare detectors, fuse complementary signals, harden against obfuscation via normalization, and quantify generalization gaps on novel and adversarially crafted attacks. The resulting pipeline achieves high detection of known attacks (87\% true positive rate) with very low false alarms on benign inputs ($<$1\% false alarm rate in Production mode). It is threshold-invariant and adds negligible latency ($\sim$1\,ms per prompt with GPU acceleration). We complement the experiments with a curated \emph{patent landscape} that motivated design choices and situates our approach within industry strategy. We close with actionable recommendations for production deployment and monitoring, and discuss lessons for research directions on multi-turn and context-confusion attacks.
+Large Language Models (LLMs) are vulnerable to prompt injection, a technique where malicious inputs manipulate them into producing harmful or unauthorized outputs. This risk is so severe that OWASP now ranks it as the number one threat for LLM applications. We present a practitioner-oriented, multi-phase evaluation of \emph{input-side} defenses---including prompt normalization, rule-based detection, semantic embedding detection, and their combination---culminating in a lightweight "LLM firewall" system. Across eight phases, we establish baseline vulnerability, build and compare detectors, fuse complementary signals, harden against obfuscation via normalization, and quantify generalization gaps on novel and adversarially crafted attacks. The resulting pipeline achieves high detection of known attacks (82--87\% true positive rate, mode-dependent) with very low false alarms on benign inputs ($<$1\% false alarm rate in Production mode). It is threshold-invariant and adds negligible latency ($\sim$1\,ms per prompt with GPU acceleration). We complement the experiments with a curated \emph{patent landscape} that motivated design choices and situates our approach within industry strategy. We close with actionable recommendations for production deployment and monitoring, and discuss lessons for research directions on multi-turn and context-confusion attacks.
 \end{abstract}
-
-\noindent\textbf{Practitioner takeaway:} A simple, sub-millisecond input filter can neutralize most prompt-injection vectors in today's LLM pipelines.
 
 \keywords{Prompt injection, LLM security, guardrails, normalization, fusion, patent analysis, obfuscation, generalization}
 
@@ -206,7 +206,7 @@ Having defined the eight-phase defense program, we now present key results from 
   \centering
   \includegraphics[width=\linewidth]{fig1_baseline_vulnerability.pdf}
   \caption{Baseline prompt-injection attack success rates (ASR) by model and attack vector. Bars show percentage of successful attacks for LLaMA-2-7B (blue) and Falcon-7B (orange) across two attack types: RAG-borne (malicious instructions in retrieved documents) and schema smuggling (JSON/tool-calling exploitation). LLaMA-2-7B shows 65\% ASR on RAG-borne vs. 5\% for Falcon-7B, demonstrating that more instruction-following models are more vulnerable.}
-  \Description{Bar chart comparing attack success rates between LLaMA-2-7b and Falcon-7b models across RAG-borne and schema smuggling attack vectors.}
+  \Description{Bar chart comparing attack success rates between LLaMA-2-7B and Falcon-7B models across RAG-borne and schema smuggling attack vectors.}
   \label{fig:baseline}
 \end{figure}
 
@@ -266,7 +266,7 @@ Figure~\ref{fig:complementarity} reveals why fusion is beneficial: v1 (signature
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{fig7_threshold_invariance.pdf}
-  \caption{Threshold invariance demonstration. Lines show TPR (green) and FAR (red) as v3's internal similarity threshold varies from 0.3 to 0.9. OR-fusion maintains stable 87\% TPR and 0\% FAR across all thresholds, eliminating the need for careful threshold tuning—a key operational advantage.}
+  \caption{Threshold invariance demonstration. Lines show TPR (green) and FAR (red) as v3's internal similarity threshold varies from 0.1 to 0.7. OR-fusion maintains stable 87\% TPR and 0\% FAR across all thresholds, eliminating the need for careful threshold tuning—a key operational advantage.}
   \Description{Line plot showing TPR and FAR performance as detection thresholds vary, demonstrating threshold-invariant behavior.}
   \label{fig:threshold}
 \end{figure}
@@ -340,13 +340,13 @@ Figure~\ref{fig:obfuscation} and Table~\ref{tab:benign} evaluate detector robust
 Figures~\ref{fig:novel}, \ref{fig:gap}, and \ref{fig:adversarial} reveal the generalization challenge. Figure~\ref{fig:novel} breaks down detection performance on 65 novel attacks collected post-training from jailbreak repositories: the overall TPR is 49.2\%, but performance varies dramatically by category. Multi-turn dialogue attacks and context-confusion (mixing user/system roles) proved hardest to detect, while semantic paraphrasing and direct goal hijacking showed moderate detection. Figure~\ref{fig:gap} starkly illustrates the generalization gap: near-perfect detection (99\%) on known attacks versus $\sim$50\% on novel ones. This gap highlights that current detectors, while effective on seen patterns, struggle with attacks outside their training distribution. Figure~\ref{fig:adversarial} examines adversarial prompts generated via iterative perturbation to evade detection: multi-step instruction decomposition achieved the highest evasion rates, while paraphrasing was partially caught by semantic screening (v3's strength). These results underscore the need for continual detector updating and motivate future work on stateful, dialogue-aware defenses.
 
 \paragraph{Summary and next steps.}
-Phases~1--6 establish the detection pipeline's efficacy: 87\% TPR on known attacks with near-zero FAR (0.77\%, i.e., $<$1\% false positives in Production mode), threshold-invariant OR-fusion, and graceful handling of obfuscated inputs via normalization. Generalization to novel attacks reveals gaps (multi-turn, context-confusion), motivating future work. Having validated the detector components, we now turn to Phases~7--8 to assemble the full system, measure deployment overhead, and provide concrete deployment recommendations.
+Phases~1--6 establish the detection pipeline's efficacy: 82\% TPR (Production mode, v3 only) or 87\% TPR (Monitoring mode, v1+v3 OR-fusion) on known attacks with low FAR (0.77\% in Production, $\sim$12\% in Monitoring), threshold-invariant OR-fusion, and graceful handling of obfuscated inputs via normalization. Generalization to novel attacks reveals gaps (multi-turn, context-confusion), motivating future work. Having validated the detector components, we now turn to Phases~7--8 to assemble the full system, measure deployment overhead, and provide concrete deployment recommendations.
 
 \section{System Architecture and Deployment}
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{fig16_architecture.pdf}
-  \caption{The ``LLM Firewall'' pipeline architecture. All incoming prompts are first normalized (to remove Unicode obfuscations and homoglyphs), then checked in parallel by a signature rule base (v1, pattern matching on injection markers) and a semantic similarity model (v3, embedding-based detection). If either detector flags the prompt (OR-fusion logic), the input is deemed malicious and can be blocked or logged; otherwise it is forwarded to the LLM. This setup adds minimal latency ($<$1\,ms with GPU acceleration). \textbf{Deployment modes:} \emph{Production} (Normalizer+v3 only): minimal false alarms ($<$1\% FAR), 87\% TPR on known attacks. \emph{Monitoring} (Normalizer+v1+v3): higher recall (49\% on novel attacks), used for auditing and detector improvement.}
+  \caption{The ``LLM Firewall'' pipeline architecture. All incoming prompts are first normalized (to remove Unicode obfuscations and homoglyphs), then checked in parallel by a signature rule base (v1, pattern matching on injection markers) and a semantic similarity model (v3, embedding-based detection). If either detector flags the prompt (OR-fusion logic), the input is deemed malicious and can be blocked or logged; otherwise it is forwarded to the LLM. This setup adds minimal latency ($<$1\,ms with GPU acceleration). \textbf{Deployment modes:} \emph{Production} (Normalizer+v3 only): minimal false alarms ($<$1\% FAR), 82\% TPR on known attacks. \emph{Monitoring} (Normalizer+v1+v3): higher recall (87\% on known, 49\% on novel attacks), used for auditing and detector improvement.}
   \Description{System architecture diagram showing the complete input-side detection pipeline from user input through Normalizer, parallel detectors, OR-fusion logic, and decision point for blocking or forwarding to LLM processing.}
   \label{fig:arch}
 \end{figure}
@@ -398,7 +398,7 @@ Table~\ref{tab:overhead} summarizes the performance profile: the semantic detect
     \toprule
     \textbf{Mode} & \textbf{Components} & \textbf{TPR} & \textbf{FAR (benign)} \\
     \midrule
-    Production & Normalizer + v3 (semantic) & 87\% (known)\textsuperscript{a} & \(\approx\)0.77\% \\
+    Production & Normalizer + v3 (semantic) & 82\% (known)\textsuperscript{a} & \(\approx\)0.77\% \\
     Monitoring & Normalizer + v1 (signature) + v3 (semantic) & 87\% (known)\textsuperscript{a}, 49\% (novel)\textsuperscript{b} & \(\approx\)12\% \\
     \bottomrule
     \multicolumn{4}{l}{\footnotesize\textsuperscript{a}Evaluated on 400 known attacks from P1; \textsuperscript{b}Evaluated on 65 novel attacks from P6b.}
@@ -410,7 +410,7 @@ These two deployment modes embody different operational philosophies. Production
 \paragraph{Using Monitoring mode in practice.}
 We recommend deploying both modes in tandem: Production mode actively gates LLM responses (blocking suspicious prompts), while Monitoring mode runs in parallel as a shadow deployment, logging any prompts that \emph{would} be flagged by the more sensitive v1+v3 configuration but are not blocked by Production. These logs can be reviewed periodically (manual audit) to identify emerging attack patterns, false positives on legitimate queries, and gaps in the Production detector. This proactive security posture enables continuous improvement: expand signature rules to cover new attack variants, add novel attack exemplars to the semantic library, or fine-tune the LLM itself based on observed adversarial attempts. The low computational overhead ($<$1\,ms per query) makes parallel deployment feasible even in high-throughput systems.
 
-Notably, both configurations achieve the same 87\% TPR on known attacks. This occurs because v3 (semantic screening) already covers the vast majority of our known attack battery, so adding v1 (signature rules) does not further increase the known-attack detection rate in our evaluation. The remaining 13\% of missed attacks fell outside both our signature patterns and semantic exemplar set---a limitation that motivates ongoing expansion of detector corpora.
+Notably, Monitoring (v1+v3) improves known-attack recall from 82\% to 87\% while keeping FAR acceptable for shadow use ($\sim$12\%). Production (Normalizer+v3) preserves a low FAR ($\sim$0.77\%) with 82\% recall on known attacks. The 5-point improvement from adding v1 demonstrates complementary coverage: v1 catches explicit pattern-based attacks that v3's semantic screening misses.
 
 However, v1's contribution is substantial in \emph{robustness}. It maintains detection under obfuscation, where pattern matching complements embedding similarity. It also helps catch certain novel attacks, contributing to the 49\% novel TPR in Monitoring mode. Thus v1 and v3 provide complementary coverage across different attack dimensions rather than redundant detection on the same samples.
 
@@ -481,7 +481,7 @@ We tested two 7B parameter models (LLaMA-2-7B and Falcon-7B) in a RAG setting. L
 Extending detectors with dialogue-state features (tracking instruction flow across conversation turns), incremental learning from Monitoring mode telemetry (automatically updating rules based on flagged prompts), and hybrid approaches combining input-side filtering with training-time alignment (e.g., SecAlign~\cite{secalign}) are promising paths. Cross-benchmark evaluation on JailbreakBench would validate generalizability. We encourage the community to collaboratively build on this work---for example, by sharing signature rule sets and attack examples to continually improve detection coverage, and by exploring stateful, multi-turn defenses for the next generation of LLM security. Community-driven maintenance of signature corpora and exemplar sets, analogous to open-source antivirus signature databases, could reduce the burden on individual practitioners while accelerating collective defense capabilities.
 
 \section{Conclusion}
-A practical, deployable LLM firewall can substantially raise the bar against prompt injection with minimal overhead. Our multi-phase program---guided by industry patent analysis and systematic experiments---yields a firewall that is fast, precise, and extensible. In known attack scenarios, it stopped approximately 87\% of attacks with virtually no false alarms ($<$1\% FAR), and even against novel, unseen attacks it caught roughly half (49\%). This was achieved with 0.63--0.86\,ms median latency with GPU acceleration, 142\,MB memory footprint, and throughput of $\sim$1,200 queries/second on the test laptop, validating that such defenses are practical for real-world deployment.
+A practical, deployable LLM firewall can substantially raise the bar against prompt injection with minimal overhead. Our multi-phase program---guided by industry patent analysis and systematic experiments---yields a firewall that is fast, precise, and extensible. In known attack scenarios, it stopped 82--87\% of attacks (mode-dependent) with low false alarms ($<$1\% FAR in Production mode, $\sim$12\% in Monitoring mode), and even against novel, unseen attacks it caught roughly half (49\%). This was achieved with 0.63--0.86\,ms median latency with GPU acceleration, 142\,MB memory footprint, and throughput of $\sim$1,200 queries/second on the test laptop, validating that such defenses are practical for real-world deployment.
 
 The eight-phase evaluation demonstrates that combining normalization (Unicode canonicalization, homoglyph mapping), signature rules (pattern matching on 47 injection markers), and semantic detection (embedding-based similarity to 150 attack exemplars) via threshold-free OR-fusion provides robust, tuning-free defense. The threshold-invariant design means practitioners can deploy without complex parameter optimization, and the dual-mode architecture (Production for low false alarms, Monitoring for comprehensive auditing) supports both immediate protection and continuous improvement.
 

@@ -1,7 +1,5 @@
 Attack Type,TPR
-Instruction Embedding,95
-Indirect Instruction,50
-Encoding/Obfuscation,45
-Alternative Phrasing,40
-Multi-Turn Manipulation,40
-Context Confusion,25
+Semantic Paraphrasing,65
+Direct Goal Hijacking,55
+Context-Confusion,35
+Multi-Turn Dialogue,30
