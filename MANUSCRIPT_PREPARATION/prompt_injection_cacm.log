@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.3)  3 NOV 2025 15:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.3)  4 NOV 2025 09:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1078,8 +1078,6 @@ LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 8.0pt on input line 70.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 8.0pt on input line 70.
-LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 8.0pt on input line 70.
 LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 8.0pt on input line 70.
 Package microtype Info: Loading generic protrusion settings for font family
@@ -1123,40 +1121,10 @@ LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
 (Font)              scaled to size 8.0pt on input line 70.
 LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
 (Font)              scaled to size 6.0pt on input line 70.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
+(Font)              scaled to size 8.0pt on input line 70.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 9.0pt on input line 73.
-LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 9.0pt on input line 79.
-LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
-(Font)              scaled to size 6.6pt on input line 79.
-LaTeX Font Info:    Font shape `OML/nxlmi/m/it' will be
-(Font)              scaled to size 9.0pt on input line 79.
-LaTeX Font Info:    Font shape `OML/nxlmi/m/it' will be
-(Font)              scaled to size 6.6pt on input line 79.
-LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
-(Font)              scaled to size 9.0pt on input line 79.
-LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
-(Font)              scaled to size 6.6pt on input line 79.
-LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
-(Font)              scaled to size 9.0pt on input line 79.
-LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
-(Font)              scaled to size 6.6pt on input line 79.
-LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
-(Font)              scaled to size 9.0pt on input line 79.
-LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
-(Font)              scaled to size 6.6pt on input line 79.
-LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
-(Font)              scaled to size 9.0pt on input line 79.
-LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
-(Font)              scaled to size 6.6pt on input line 79.
-LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
-(Font)              scaled to size 9.0pt on input line 79.
-LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
-(Font)              scaled to size 6.6pt on input line 79.
-LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
-(Font)              scaled to size 9.0pt on input line 79.
-LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
-(Font)              scaled to size 6.6pt on input line 79.
 
 
 [1.1{C:/Users/carlo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/
@@ -1167,124 +1135,215 @@ pa5.enc}{C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine
 libertine/lbtn_nh77jq.enc}{C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/e
 nc/dvips/libertine/lbtn_naooyc.enc}]
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/b/n' will be
-(Font)              scaled to size 9.0pt on input line 92.
+(Font)              scaled to size 9.0pt on input line 77.
+LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 9.0pt on input line 77.
+LaTeX Font Info:    Font shape `OT1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 6.6pt on input line 77.
+LaTeX Font Info:    Font shape `OML/nxlmi/m/it' will be
+(Font)              scaled to size 9.0pt on input line 77.
+LaTeX Font Info:    Font shape `OML/nxlmi/m/it' will be
+(Font)              scaled to size 6.6pt on input line 77.
+LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
+(Font)              scaled to size 9.0pt on input line 77.
+LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
+(Font)              scaled to size 6.6pt on input line 77.
+LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
+(Font)              scaled to size 9.0pt on input line 77.
+LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
+(Font)              scaled to size 6.6pt on input line 77.
+LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
+(Font)              scaled to size 9.0pt on input line 77.
+LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
+(Font)              scaled to size 6.6pt on input line 77.
+LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
+(Font)              scaled to size 9.0pt on input line 77.
+LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
+(Font)              scaled to size 6.6pt on input line 77.
+LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
+(Font)              scaled to size 9.0pt on input line 77.
+LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
+(Font)              scaled to size 6.6pt on input line 77.
+LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
+(Font)              scaled to size 9.0pt on input line 77.
+LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
+(Font)              scaled to size 6.6pt on input line 77.
+
+
+[2.2]
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/n' will be
-(Font)              scaled to size 8.0pt on input line 100.
-LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 11
-0.
+(Font)              scaled to size 8.0pt on input line 113.
+LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 12
+3.
 
 (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/inconsolata\t1zi4.fd
 File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
 )
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 9.0pt on input line 110.
+(Font)              scaled to size 9.0pt on input line 123.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zi4' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
+Underfull \vbox (badness 2556) has occurred while \output is active []
 
-[2.2{C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/inconsolata/i
+
+
+[3.3]
+Underfull \vbox (badness 1817) has occurred while \output is active []
+
+
+
+[4.4{C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/inconsolata/i
 4-t1-4.enc}]
-<fig1_baseline_vulnerability.pdf, id=114, 570.93298pt x 354.12299pt>
+
+[5.5]
+<fig1_baseline_vulnerability.pdf, id=153, 570.6777pt x 353.7692pt>
 File: fig1_baseline_vulnerability.pdf Graphic file (type pdf)
 <use fig1_baseline_vulnerability.pdf>
-Package pdftex.def Info: fig1_baseline_vulnerability.pdf  used on input line 14
-8.
-(pdftex.def)             Requested size: 430.00462pt x 266.7209pt.
-<fig4_detector_performance.pdf, id=115, 570.93298pt x 354.12299pt>
+Package pdftex.def Info: fig1_baseline_vulnerability.pdf  used on input line 20
+5.
+(pdftex.def)             Requested size: 430.00462pt x 266.5732pt.
+
+
+[6.6]
+<fig4_detector_performance.pdf, id=165, 570.6777pt x 353.74847pt>
 File: fig4_detector_performance.pdf Graphic file (type pdf)
 <use fig4_detector_performance.pdf>
-Package pdftex.def Info: fig4_detector_performance.pdf  used on input line 171.
+Package pdftex.def Info: fig4_detector_performance.pdf  used on input line 230.
 
-(pdftex.def)             Requested size: 430.00462pt x 266.7209pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-[3.3 <./fig1_baseline_vulnerability.pdf>]
-<fig6_complementarity.pdf, id=128, 498.663pt x 354.12299pt>
+(pdftex.def)             Requested size: 430.00462pt x 266.55757pt.
+<fig6_complementarity.pdf, id=167, 498.43716pt x 354.2553pt>
 File: fig6_complementarity.pdf Graphic file (type pdf)
 <use fig6_complementarity.pdf>
-Package pdftex.def Info: fig6_complementarity.pdf  used on input line 179.
-(pdftex.def)             Requested size: 430.00462pt x 305.36655pt.
-<fig7_threshold_invariance.pdf, id=129, 643.20299pt x 354.12299pt>
+Package pdftex.def Info: fig6_complementarity.pdf  used on input line 240.
+(pdftex.def)             Requested size: 430.00462pt x 305.632pt.
+
+Underfull \vbox (badness 3354) has occurred while \output is active []
+
+
+
+[7.7 <./fig1_baseline_vulnerability.pdf>]
+<fig7_threshold_invariance.pdf, id=238, 642.94771pt x 353.5245pt>
 File: fig7_threshold_invariance.pdf Graphic file (type pdf)
 <use fig7_threshold_invariance.pdf>
-Package pdftex.def Info: fig7_threshold_invariance.pdf  used on input line 203.
+Package pdftex.def Info: fig7_threshold_invariance.pdf  used on input line 266.
 
-(pdftex.def)             Requested size: 430.00462pt x 236.74782pt.
-<fig9_learning_gain.pdf, id=130, 426.39299pt x 281.85298pt>
+(pdftex.def)             Requested size: 430.00462pt x 236.43942pt.
+
+Underfull \vbox (badness 5578) has occurred while \output is active []
+
+
+
+[8.8 <./fig4_detector_performance.pdf>]
+<fig9_learning_gain.pdf, id=293, 426.19728pt x 353.74847pt>
 File: fig9_learning_gain.pdf Graphic file (type pdf)
 <use fig9_learning_gain.pdf>
-Package pdftex.def Info: fig9_learning_gain.pdf  used on input line 212.
-(pdftex.def)             Requested size: 430.00462pt x 284.24779pt.
-<fig10_obfuscation_fpr.pdf, id=131, 669.22017pt x 353.8821pt>
+Package pdftex.def Info: fig9_learning_gain.pdf  used on input line 277.
+(pdftex.def)             Requested size: 430.00462pt x 356.91069pt.
+<fig10_obfuscation_fpr.pdf, id=295, 672.52174pt x 426.27074pt>
 File: fig10_obfuscation_fpr.pdf Graphic file (type pdf)
 <use fig10_obfuscation_fpr.pdf>
-Package pdftex.def Info: fig10_obfuscation_fpr.pdf  used on input line 220.
-(pdftex.def)             Requested size: 430.00462pt x 227.39091pt.
-LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/it' will be
-(Font)              scaled to size 8.0pt on input line 221.
-<fig11_novel_attack_tpr.pdf, id=132, 643.20299pt x 354.12299pt>
-File: fig11_novel_attack_tpr.pdf Graphic file (type pdf)
-<use fig11_novel_attack_tpr.pdf>
-Package pdftex.def Info: fig11_novel_attack_tpr.pdf  used on input line 247.
-(pdftex.def)             Requested size: 430.00462pt x 236.74782pt.
+Package pdftex.def Info: fig10_obfuscation_fpr.pdf  used on input line 287.
+(pdftex.def)             Requested size: 430.00462pt x 272.55865pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-[4.4 <./fig4_detector_performance.pdf>]
-<fig15_generalization_gap.pdf, id=142, 498.4221pt x 354.12299pt>
+[9.9 <./fig6_complementarity.pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[10.10 <./fig7_threshold_invariance.pdf>]
+<fig11_novel_attack_tpr.pdf, id=434, 643.13744pt x 425.7945pt>
+File: fig11_novel_attack_tpr.pdf Graphic file (type pdf)
+<use fig11_novel_attack_tpr.pdf>
+Package pdftex.def Info: fig11_novel_attack_tpr.pdf  used on input line 316.
+(pdftex.def)             Requested size: 430.00462pt x 284.68959pt.
+<fig15_generalization_gap.pdf, id=435, 498.46729pt x 353.75203pt>
 File: fig15_generalization_gap.pdf Graphic file (type pdf)
 <use fig15_generalization_gap.pdf>
-Package pdftex.def Info: fig15_generalization_gap.pdf  used on input line 255.
-(pdftex.def)             Requested size: 430.00462pt x 305.51784pt.
-<fig13_adversarial_evasion.pdf, id=143, 498.663pt x 281.85298pt>
+Package pdftex.def Info: fig15_generalization_gap.pdf  used on input line 324.
+(pdftex.def)             Requested size: 430.00462pt x 305.18163pt.
+<fig13_adversarial_evasion.pdf, id=436, 570.9377pt x 353.5245pt>
 File: fig13_adversarial_evasion.pdf Graphic file (type pdf)
 <use fig13_adversarial_evasion.pdf>
-Package pdftex.def Info: fig13_adversarial_evasion.pdf  used on input line 263.
+Package pdftex.def Info: fig13_adversarial_evasion.pdf  used on input line 332.
 
-(pdftex.def)             Requested size: 430.00462pt x 243.04684pt.
-<fig16_architecture.pdf, id=144, 1149.09305pt x 735.22678pt>
+(pdftex.def)             Requested size: 430.00462pt x 266.27014pt.
+
+
+[11.11 <./fig9_learning_gain.pdf>]
+<fig16_architecture.pdf, id=512, 1149.09305pt x 787.74298pt>
 File: fig16_architecture.pdf Graphic file (type pdf)
 <use fig16_architecture.pdf>
-Package pdftex.def Info: fig16_architecture.pdf  used on input line 272.
-(pdftex.def)             Requested size: 430.00462pt x 275.1372pt.
-LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
-(Font)              scaled to size 8.0pt on input line 273.
+Package pdftex.def Info: fig16_architecture.pdf  used on input line 346.
+(pdftex.def)             Requested size: 430.00462pt x 294.78987pt.
 
-Overfull \vbox (36.50891pt too high) has occurred while \output is active []
+Underfull \vbox (badness 5147) has occurred while \output is active []
 
 
 
-[5.5 <./fig6_complementarity.pdf>] Processing 'acks' comment.
+[12.12 <./fig10_obfuscation_fpr.pdf>]
+Underfull \vbox (badness 1478) has occurred while \output is active []
 
-[6.6 <./fig7_threshold_invariance.pdf>]
+
+
+[13.13 <./fig11_novel_attack_tpr.pdf>]
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 6.6pt on input line 399.
+LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
+(Font)              scaled to size 5.5pt on input line 402.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[14.14 <./fig15_generalization_gap.pdf>]
+Underfull \vbox (badness 1097) has occurred while \output is active []
+
+
+
+[15.15 <./fig13_adversarial_evasion.pdf>]
+Underfull \vbox (badness 1389) has occurred while \output is active []
+
+
+
+[16.16 <./fig16_architecture.pdf>]
+
+[17.17]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[18.18]
+
+[19.19] Processing 'acks' comment.
 \openout3 = `comment.cut'.
 
  Comment 'acks' writing to comment.cut.
 Straight input of comment.cut. (comment.cut) (prompt_injection_cacm.bbl
+Underfull \vbox (badness 6047) has occurred while \output is active []
+
+
+
+[20.20{C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/l
+btn_oexx6f.enc}]
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/it' will be
 (Font)              scaled to size 7.0pt on input line 65.
 LaTeX Info: Redefining \tempurl on input line 68.
+LaTeX Info: Redefining \tempurl on input line 127.
+LaTeX Info: Redefining \tempurl on input line 180.
+LaTeX Info: Redefining \tempurl on input line 196.
+LaTeX Info: Redefining \tempurl on input line 224.
 )
 
 Class acmart Warning: CCS concepts are mandatory for papers over two pages.
 
 
-
-[7.7 <./fig9_learning_gain.pdf>]
-
-[8.8{C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/libertine/lbt
-n_oexx6f.enc} <./fig10_obfuscation_fpr.pdf> <./fig11_novel_attack_tpr.pdf>]
-
-[9.9 <./fig15_generalization_gap.pdf>]
-
-[10.10 <./fig13_adversarial_evasion.pdf>]
 
 
 (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-pdfdoc.d
@@ -1293,37 +1352,38 @@ File: se-pdfdoc.def 2019/11/29 v1.12 stringenc: PDFDocEncoding
 )
 (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\se-utf8.def
 File: se-utf8.def 2019/11/29 v1.12 stringenc: UTF-8
-) [11.11 <./fig16_architecture.pdf>] (prompt_injection_cacm.aux)
+) [21.21] (prompt_injection_cacm.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-10-09>
  ***********
 Package rerunfilecheck Info: File `prompt_injection_cacm.out' has not changed.
-(rerunfilecheck)             Checksum: 3E48C5D79DD02C09BD0E23E24E81ED5D;3276.
+(rerunfilecheck)             Checksum: 2951509A6D662BC230B5AD17F2990645;3578.
  ) 
 Here is how much of TeX's memory you used:
- 25620 strings out of 468080
- 478627 string characters out of 5425772
- 913259 words of memory out of 5000000
- 53340 multiletter control sequences out of 15000+600000
- 782274 words of font info for 324 fonts, out of 8000000 for 9000
+ 25872 strings out of 468080
+ 484133 string characters out of 5425772
+ 923865 words of memory out of 5000000
+ 53368 multiletter control sequences out of 15000+600000
+ 800882 words of font info for 447 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
- 90i,11n,131p,1072b,1227s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,12n,131p,1412b,1281s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/inconsolata/
 Inconsolata-zi4r.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/
-public/newtx/LibertineMathMI7.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX
-/fonts/type1/public/libertine/LinBiolinumT.pfb><C:/Users/carlo/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/libertine/LinBiolinumTB.pfb><C:/Users/carlo/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinBiolinumTI.pfb><C:/
-Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLiber
-tineT.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/libe
-rtine/LinLibertineTB.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/ty
-pe1/public/libertine/LinLibertineTI.pfb><C:/Users/carlo/AppData/Local/Programs/
-MiKTeX/fonts/type1/public/newtx/NewTXMI7.pfb><C:/Users/carlo/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/newtx/txsys.pfb>
-Output written on prompt_injection_cacm.pdf (11 pages, 3561521 bytes).
+public/newtx/LibertineMathMI.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/
+fonts/type1/public/libertine/LinBiolinumT.pfb><C:/Users/carlo/AppData/Local/Pro
+grams/MiKTeX/fonts/type1/public/libertine/LinBiolinumTB.pfb><C:/Users/carlo/App
+Data/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLibertineT.pfb><C:/U
+sers/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/libertine/LinLibert
+ineTB.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/libe
+rtine/LinLibertineTI.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/ty
+pe1/public/newtx/NewTXMI.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX/font
+s/type1/public/newtx/NewTXMI7.pfb><C:/Users/carlo/AppData/Local/Programs/MiKTeX
+/fonts/type1/public/newtx/txmiaX.pfb><C:/Users/carlo/AppData/Local/Programs/MiK
+TeX/fonts/type1/public/newtx/txsys.pfb>
+Output written on prompt_injection_cacm.pdf (21 pages, 855116 bytes).
 PDF statistics:
- 286 PDF objects out of 1000 (max. 8388607)
- 62 named destinations out of 1000 (max. 500000)
- 86731 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 1269 PDF objects out of 1440 (max. 8388607)
+ 107 named destinations out of 1000 (max. 500000)
+ 86739 words of extra memory for PDF output out of 89155 (max. 10000000)
 

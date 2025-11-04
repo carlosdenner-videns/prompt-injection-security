@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{6}
+\begin{thebibliography}{13}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -103,6 +103,34 @@
 \shownote{v3, Last revised Jul. 3, 2025; accessed Nov. 3, 2025}.
 
 
+\bibitem[{HiddenLayer}(2025)]%
+        {hiddenlayer-cursor}
+\bibfield{author}{\bibinfo{person}{{HiddenLayer}}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \bibinfo{title}{How Hidden Prompt Injections Can Hijack AI Code
+  Assistants Like Cursor}.
+\newblock
+  \bibinfo{howpublished}{\url{https://hiddenlayer.com/research/prompt-injection-cursor/}}.
+\newblock
+\newblock
+\shownote{Accessed Nov. 4, 2025}.
+
+
+\bibitem[{L1B3RT4S Community}(2024)]%
+        {jailbreak-repo}
+\bibfield{author}{\bibinfo{person}{{L1B3RT4S Community}}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \bibinfo{title}{Jailbreak Prompt Collection}.
+\newblock \bibinfo{howpublished}{GitHub Repository}.
+\newblock
+\urldef\tempurl%
+\url{https://github.com/elder-plinius/L1B3RT4S}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{15k+ stars; accessed Nov. 4, 2025}.
+
+
 \bibitem[Liu et~al\mbox{.}(2024)]%
         {liu-usenix24}
 \bibfield{author}{\bibinfo{person}{Yupei Liu}, \bibinfo{person}{Yuqi Jia},
@@ -115,6 +143,19 @@
 \newblock
 
 
+\bibitem[{Microsoft Security Response Center}(2025)]%
+        {microsoft-indirect}
+\bibfield{author}{\bibinfo{person}{{Microsoft Security Response Center}}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \bibinfo{title}{How Microsoft Defends Against Indirect Prompt
+  Injection Attacks}.
+\newblock
+  \bibinfo{howpublished}{\url{https://msrc.microsoft.com/blog/2025/01/indirect-prompt-injection-defense/}}.
+\newblock
+\newblock
+\shownote{Accessed Nov. 4, 2025}.
+
+
 \bibitem[{OWASP GenAI Security Project}(2025)]%
         {owasp-llm01}
 \bibfield{author}{\bibinfo{person}{{OWASP GenAI Security Project}}.}
@@ -125,6 +166,66 @@
 \newblock
 \newblock
 \shownote{Accessed Nov. 3, 2025}.
+
+
+\bibitem[Rehberger(2024)]%
+        {rehberger-copilot}
+\bibfield{author}{\bibinfo{person}{Johann Rehberger}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \bibinfo{title}{Microsoft 365 Copilot: From Prompt Injection to
+  Exfiltration of Personal Information}.
+\newblock \bibinfo{howpublished}{EmbraceTheRed}.
+\newblock
+\urldef\tempurl%
+\url{https://embracethered.com/blog/posts/2024/m365-copilot-prompt-injection-data-exfiltration/}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Accessed Nov. 4, 2025}.
+
+
+\bibitem[{Tenable Research}(2025)]%
+        {cve-cursor}
+\bibfield{author}{\bibinfo{person}{{Tenable Research}}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \bibinfo{title}{CVE-2025-54135 (CurXecute) and CVE-2025-54136
+  (MCPoison): Cursor AI IDE Vulnerabilities}.
+\newblock \bibinfo{howpublished}{BleepingComputer}.
+\newblock
+\urldef\tempurl%
+\url{https://www.bleepingcomputer.com/news/security/cursor-ai-ide-flaws-exploited-prompt-injection/}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Accessed Nov. 4, 2025}.
+
+
+\bibitem[{The Guardian}(2024)]%
+        {guardian-search}
+\bibfield{author}{\bibinfo{person}{{The Guardian}}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \bibinfo{title}{ChatGPT search tool vulnerable to manipulation and
+  deception, tests show}.
+\newblock
+  \bibinfo{howpublished}{\url{https://www.theguardian.com/technology/2024/nov/07/chatgpt-search-hidden-text-manipulation}}.
+\newblock
+\newblock
+\shownote{Accessed Nov. 4, 2025}.
+
+
+\bibitem[Willison(2025)]%
+        {willison-trifecta}
+\bibfield{author}{\bibinfo{person}{Simon Willison}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \bibinfo{title}{The Lethal Trifecta for AI Agents}.
+\newblock \bibinfo{howpublished}{Simon Willison's Weblog}.
+\newblock
+\urldef\tempurl%
+\url{https://simonwillison.net/2025/Jan/14/lethal-trifecta/}
+\showURL{%
+\tempurl}
+\newblock
+\shownote{Accessed Nov. 4, 2025}.
 
 
 \end{thebibliography}
