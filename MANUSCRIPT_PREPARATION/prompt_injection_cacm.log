@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.3)  4 NOV 2025 10:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.3)  4 NOV 2025 10:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1211,12 +1211,12 @@ Underfull \vbox (badness 1609) has occurred while \output is active []
 
 
 [5.5]
-<fig1_baseline_vulnerability.pdf, id=154, 570.6777pt x 353.7692pt>
+<fig1_baseline_vulnerability.pdf, id=154, 570.93298pt x 354.12299pt>
 File: fig1_baseline_vulnerability.pdf Graphic file (type pdf)
 <use fig1_baseline_vulnerability.pdf>
 Package pdftex.def Info: fig1_baseline_vulnerability.pdf  used on input line 20
 7.
-(pdftex.def)             Requested size: 430.00462pt x 266.5732pt.
+(pdftex.def)             Requested size: 430.00462pt x 266.7209pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -1235,24 +1235,24 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 [7.7 <./fig1_baseline_vulnerability.pdf>]
-<fig6_complementarity.pdf, id=236, 498.43716pt x 354.2553pt>
+<fig6_complementarity.pdf, id=176, 498.43716pt x 354.2553pt>
 File: fig6_complementarity.pdf Graphic file (type pdf)
 <use fig6_complementarity.pdf>
 Package pdftex.def Info: fig6_complementarity.pdf  used on input line 242.
 (pdftex.def)             Requested size: 430.00462pt x 305.632pt.
-<fig7_threshold_invariance.pdf, id=239, 642.94771pt x 353.5245pt>
+<fig7_threshold_invariance.pdf, id=180, 642.94771pt x 353.5245pt>
 File: fig7_threshold_invariance.pdf Graphic file (type pdf)
 <use fig7_threshold_invariance.pdf>
 Package pdftex.def Info: fig7_threshold_invariance.pdf  used on input line 268.
 
 (pdftex.def)             Requested size: 430.00462pt x 236.43942pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 6001) has occurred while \output is active []
 
 
 
 [8.8 <./fig4_detector_performance.pdf>]
-<fig9_learning_gain.pdf, id=295, 426.19728pt x 353.74847pt>
+<fig9_learning_gain.pdf, id=236, 426.19728pt x 353.74847pt>
 File: fig9_learning_gain.pdf Graphic file (type pdf)
 <use fig9_learning_gain.pdf>
 Package pdftex.def Info: fig9_learning_gain.pdf  used on input line 279.
@@ -1263,7 +1263,7 @@ Underfull \vbox (badness 2237) has occurred while \output is active []
 
 
 [9.9 <./fig6_complementarity.pdf>]
-<fig10_obfuscation_fpr.pdf, id=363, 672.52174pt x 426.27074pt>
+<fig10_obfuscation_fpr.pdf, id=304, 672.52174pt x 426.27074pt>
 File: fig10_obfuscation_fpr.pdf Graphic file (type pdf)
 <use fig10_obfuscation_fpr.pdf>
 Package pdftex.def Info: fig10_obfuscation_fpr.pdf  used on input line 289.
@@ -1274,17 +1274,17 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 [10.10 <./fig7_threshold_invariance.pdf>]
-<fig11_novel_attack_tpr.pdf, id=435, 643.20299pt x 354.12299pt>
+<fig11_novel_attack_tpr.pdf, id=376, 643.20299pt x 354.12299pt>
 File: fig11_novel_attack_tpr.pdf Graphic file (type pdf)
 <use fig11_novel_attack_tpr.pdf>
 Package pdftex.def Info: fig11_novel_attack_tpr.pdf  used on input line 318.
 (pdftex.def)             Requested size: 430.00462pt x 236.74782pt.
-<fig15_generalization_gap.pdf, id=436, 498.46729pt x 353.75203pt>
+<fig15_generalization_gap.pdf, id=377, 498.46729pt x 353.75203pt>
 File: fig15_generalization_gap.pdf Graphic file (type pdf)
 <use fig15_generalization_gap.pdf>
 Package pdftex.def Info: fig15_generalization_gap.pdf  used on input line 326.
 (pdftex.def)             Requested size: 430.00462pt x 305.18163pt.
-<fig13_adversarial_evasion.pdf, id=437, 570.9377pt x 353.5245pt>
+<fig13_adversarial_evasion.pdf, id=378, 570.9377pt x 353.5245pt>
 File: fig13_adversarial_evasion.pdf Graphic file (type pdf)
 <use fig13_adversarial_evasion.pdf>
 Package pdftex.def Info: fig13_adversarial_evasion.pdf  used on input line 334.
@@ -1301,7 +1301,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 [12.12 <./fig10_obfuscation_fpr.pdf>]
-<fig16_architecture.pdf, id=605, 1149.09305pt x 735.22678pt>
+<fig16_architecture.pdf, id=546, 1149.09305pt x 735.22678pt>
 File: fig16_architecture.pdf Graphic file (type pdf)
 <use fig16_architecture.pdf>
 Package pdftex.def Info: fig16_architecture.pdf  used on input line 348.
@@ -1322,11 +1322,11 @@ Underfull \vbox (badness 4608) has occurred while \output is active []
 
 
 [16.16 <./fig16_architecture.pdf>]
-Underfull \vbox (badness 2556) has occurred while \output is active []
-
-
 
 [17.17]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 [18.18]
 
@@ -1365,11 +1365,11 @@ Package rerunfilecheck Info: File `prompt_injection_cacm.out' has not changed.
 (rerunfilecheck)             Checksum: 2951509A6D662BC230B5AD17F2990645;3578.
  ) 
 Here is how much of TeX's memory you used:
- 25915 strings out of 468080
- 485204 string characters out of 5425772
- 923285 words of memory out of 5000000
+ 25912 strings out of 468080
+ 485126 string characters out of 5425772
+ 922988 words of memory out of 5000000
  53375 multiletter control sequences out of 15000+600000
- 819677 words of font info for 469 fonts, out of 8000000 for 9000
+ 819306 words of font info for 467 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  90i,12n,131p,1436b,1281s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/inconsolata/
@@ -1386,9 +1386,9 @@ iKTeX/fonts/type1/public/newtx/NewTXMI.pfb><C:/Users/carlo/AppData/Local/Progra
 ms/MiKTeX/fonts/type1/public/newtx/NewTXMI7.pfb><C:/Users/carlo/AppData/Local/P
 rograms/MiKTeX/fonts/type1/public/newtx/txmiaX.pfb><C:/Users/carlo/AppData/Loca
 l/Programs/MiKTeX/fonts/type1/public/newtx/txsys.pfb>
-Output written on prompt_injection_cacm.pdf (21 pages, 2847227 bytes).
+Output written on prompt_injection_cacm.pdf (21 pages, 3072245 bytes).
 PDF statistics:
- 926 PDF objects out of 1000 (max. 8388607)
+ 867 PDF objects out of 1000 (max. 8388607)
  108 named destinations out of 1000 (max. 500000)
  99027 words of extra memory for PDF output out of 106986 (max. 10000000)
 

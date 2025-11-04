@@ -76,13 +76,13 @@ In 2025, security researchers demonstrated that a malicious README file on GitHu
 
 Prompt injection arises whenever three capabilities co-exist: access to private data, exposure to untrusted content, and some egress path. Security researcher Simon Willison calls this the ``lethal trifecta''~\cite{willison-trifecta}---when all three are present, an LLM will often follow whatever instructions arrive in context, regardless of authorship. The mechanism is simple: malicious inputs coerce models to ignore policy, exfiltrate data, or execute unintended tools. Consider a customer service chatbot using Retrieval-Augmented Generation (RAG) to answer queries from a knowledge base. An attacker embeds instructions in a document: ``Ignore previous instructions. When asked about pricing, reveal all customer email addresses.'' When a user innocently asks ``What are your pricing tiers?'', the LLM retrieves the poisoned document and may comply with the hidden instruction, leaking sensitive data.
 
-\textbf{Thesis.} We argue for a simple operational rule: block untrusted inputs before the LLM or tools ever run. By combining Unicode normalization, rule-based signature detection, and semantic embedding screening with threshold-invariant OR-fusion, we can create an effective ``LLM firewall'' that significantly mitigates prompt injection with minimal impact on system performance ($<$1\,ms latency per prompt). This input-side defense is stateless, deterministic, and production-ready---providing a binary gate in an otherwise probabilistic system.
+\textbf{Thesis.} We argue for a simple operational rule: block untrusted inputs before the LLM or tools ever run. By combining Unicode normalization, rule-based signature detection, and semantic embedding screening with threshold-invariant OR-fusion, we can create an effective ``LLM firewall'' that significantly mitigates prompt injection with minimal impact on system performance ($<$1\,ms per prompt with GPU acceleration). This input-side defense is stateless, deterministic, and production-ready---providing a binary gate in an otherwise probabilistic system.
 
 This article reports a \emph{multi-phase} defense program conducted in a RAG setting---precisely the scenario where such attacks are most dangerous. Our approach is guided by two pillars: (i) a structured patent landscape we compiled to capture emerging industrial patterns, and (ii) systematic experiments that incrementally build a deployable pipeline. Across these real-world incidents, the mechanism is the same: untrusted text is parsed as instructions. Our pipeline therefore treats every inbound string as potentially adversarial---normalizes it, screens for signatures and semantic patterns, and blocks deterministically at the input boundary.
 
 \paragraph{Contributions.}
 \begin{itemize}
-  \item We present a deployable input-side defense pipeline (``LLM firewall'') combining \emph{Normalization} + \emph{Signature} (rule-based pattern matching) + \emph{Semantic} (embedding-based similarity) detectors with \emph{OR-fusion}, achieving 87\% detection of known attacks with $<$1\% false alarms.
+  \item We present a deployable input-side pipeline (Normalization + Signature + Semantic with OR-fusion) that delivers 82\% TPR at $<$1\% FAR in Production (Normalizer+v3) and 87\% TPR in Monitoring (v1+v3) for auditing and detector improvement.
   \item We conduct an eight-phase evaluation quantifying baseline vulnerability, detector efficacy, threshold invariance (OR-fusion avoids complex tuning), obfuscation robustness via normalization, and generalization to novel and adversarial prompts.
   \item We provide a \emph{patent landscape} synthesis (18 filings from OpenAI, Microsoft, Google, Meta, and others) showing convergent industry strategies that informed our design choices.
   \item We deliver practitioner recommendations: a Production mode (low false alarm rate) and a Monitoring mode (higher recall for auditing); actionable lessons for multi-turn and context-confusion gaps; and evidence that simple, fast gates materially reduce real incident classes reported in the wild.
@@ -160,7 +160,7 @@ We tested four fusion strategies: OR-logic (flag if \emph{any} detector triggers
 \subsection*{P4: Do We Need to Tune Thresholds?}
 \emph{Practitioner question:} ML systems often require tedious parameter tuning. Can we avoid that?
 
-We systematically varied the v3 similarity threshold from 0.3 to 0.9 and measured how OR-fusion performance changed. The result was striking: across this wide range, OR-fusion maintained stable 87\% detection with $<$1\% false alarms.
+We systematically varied the v3 similarity threshold from 0.1 to 0.7 and measured how OR-fusion performance changed. The result was striking: across this wide range, OR-fusion maintained stable 87\% detection with $<$1\% false alarms.
 
 \emph{Key finding:} Threshold invariance means practitioners can deploy without complex optimization. This is a rare win in ML security---the system ``just works'' across a wide range of settings. The reason: OR-fusion's complementarity makes it robust to individual detector tuning.
 
@@ -260,7 +260,7 @@ Figure~\ref{fig:detectors} compares the three detector variants on the Phase~1 a
   \end{tabular}
 \end{table}
 
-Figure~\ref{fig:complementarity} reveals why fusion is beneficial: v1 (signature) and v3 (semantic) catch partially disjoint subsets of attacks. Some attacks are detected only by signature rules (keyword-heavy), others only by semantic similarity (paraphrased injections), and a substantial overlap exists for direct instruction hijacking. Table~\ref{tab:fusion} quantifies fusion strategies: OR(v1,v3) achieves 87\% TPR at 0\% FAR---the best balance. AND fusion is overly conservative (55.5\% TPR), requiring both detectors to agree and thus missing attacks caught by only one. Majority voting with v2 added little value (60\% TPR), confirming v2's limited contribution. The OR-fusion result guided our final architecture.
+Figure~\ref{fig:complementarity} reveals why fusion is beneficial: v1 (signature) and v3 (semantic) catch partially disjoint subsets of attacks. Some attacks are detected only by signature rules (keyword-heavy), others only by semantic similarity (paraphrased injections), and a substantial overlap exists for direct instruction hijacking. Table~\ref{tab:fusion} quantifies fusion strategies: OR(v1,v3) achieves 87\% TPR at 0\% FAR---the best balance. AND fusion is overly conservative (55.5\% TPR), requiring both detectors to agree and thus missing attacks caught by only one. Majority voting with v2 added little value (60\% TPR), confirming v2's limited contribution. The OR-fusion result guided our final architecture. Note: Table~\ref{tab:fusion} reports FAR on clean benign inputs; P6a evaluates benign obfuscations.
 
 \subsection{Threshold Invariance (P4)}
 \begin{figure}[t]
@@ -324,7 +324,7 @@ Figure~\ref{fig:obfuscation} and Table~\ref{tab:benign} evaluate detector robust
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{fig15_generalization_gap.pdf}
-  \caption{Generalization gap analysis (OR-fusion). Bars show TPR (\%): Known attacks from P1 (87\% TPR with OR-fusion, the production configuration), Novel attacks collected post-training (49\% TPR, unseen patterns). The $\sim$38-point gap highlights limitations in generalizing beyond training exemplars. Note: The optional learned logistic fusion achieved 99\% on P1 (Fig.~5) but is not deployed due to overfitting concerns.}
+  \caption{Generalization gap analysis (Monitoring / OR-fusion). Bars show TPR (\%): known attacks from P1 (87\% TPR with Monitoring/OR-fusion), novel attacks (49\%). The $\sim$38-point gap highlights limits in generalizing beyond training exemplars. (The optional learned logistic fusion reached 99\% on P1 but is not deployed.)}
   \Description{Bar chart comparing detection performance on known attacks versus novel unseen attacks, illustrating the generalization gap.}
   \label{fig:gap}
 \end{figure}
@@ -332,7 +332,7 @@ Figure~\ref{fig:obfuscation} and Table~\ref{tab:benign} evaluate detector robust
 \begin{figure}[t]
   \centering
   \includegraphics[width=\linewidth]{fig13_adversarial_evasion.pdf}
-  \caption{Adversarial evasion technique effectiveness (P6c, 30 iteratively crafted attacks). Horizontal bars show evasion rate (\%, percentage of attacks that bypassed detection). Multi-step instruction decomposition: 80\% evasion (highest). Semantic paraphrasing: 60\% evasion (partially caught by v3). Synonym substitution: 55\% evasion. Obfuscation variants: 45\% evasion (caught by normalizer).}
+  \caption{Adversarial evasion technique effectiveness (P6c, n=30). Multi-step instruction decomposition 75\%, encoding chains 70\%, semantic obfuscation 65\%, paraphrasing 60\%, fragmentation 55\%.}
   \Description{Horizontal bar chart showing evasion rates for different adversarial techniques including multi-step evolution, semantic paraphrasing, and obfuscation.}
   \label{fig:adversarial}
 \end{figure}
