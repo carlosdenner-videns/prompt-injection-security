@@ -20,7 +20,7 @@ ax.axis('off')
 # ============================================================================
 # TITLE
 # ============================================================================
-ax.text(8, 10.6, 'Figure 16: Prompt Injection Detection Pipeline Architecture', 
+ax.text(8, 10.6, 'Prompt Injection Detection Pipeline Architecture', 
         ha='center', fontsize=16, fontweight='bold')
 ax.text(8, 10.15, 'Input-Side Detection Before LLM Processing', 
         ha='center', fontsize=11, style='italic', color='#555')

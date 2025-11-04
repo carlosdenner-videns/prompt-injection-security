@@ -1,0 +1,67 @@
+================================================================================
+FIGURE REGENERATION CHECKLIST
+Created: 2025-11-04 07:47:50
+================================================================================
+
+Instructions:
+1. Regenerate each figure without the 'Figure X:' prefix
+2. Mark each item with [X] when complete
+3. Run verify_figure_fixes.py to check your progress
+
+--------------------------------------------------------------------------------
+CHECKLIST (Mark [X] when done):
+--------------------------------------------------------------------------------
+
+[ ] Figure 2 (LaTeX): fig4_detector_performance.pdf
+    Currently embedded: Figure 4
+    Action: Remove 'Figure 4:', keep 'Detector Performance Comparison'
+    File modified: ___________
+
+[ ] Figure 3 (LaTeX): fig6_complementarity.pdf
+    Currently embedded: Figure 6
+    Action: Remove 'Figure 6:', keep 'Detector Complementarity Analysis'
+    File modified: ___________
+
+[ ] Figure 4 (LaTeX): fig7_threshold_invariance.pdf
+    Currently embedded: Figure 7
+    Action: Remove 'Figure 7:', keep 'Threshold-Invariant Performance'
+    File modified: ___________
+
+[ ] Figure 5 (LaTeX): fig9_learning_gain.pdf
+    Currently embedded: Figure 9
+    Action: Remove 'Figure 9:', keep title only
+    File modified: ___________
+
+[ ] Figure 6 (LaTeX): fig10_obfuscation_fpr.pdf
+    Currently embedded: Figure 10
+    Action: Remove 'Figure 10:', keep title only
+    File modified: ___________
+
+[ ] Figure 7 (LaTeX): fig11_novel_attack_tpr.pdf
+    Currently embedded: Figure 11
+    Action: Remove 'Figure 11:', keep title only
+    File modified: ___________
+
+[ ] Figure 9 (LaTeX): fig13_adversarial_evasion.pdf
+    Currently embedded: Figure 13
+    Action: Remove 'Figure 13:', keep title only
+    File modified: ___________
+
+[ ] Figure 8 (LaTeX): fig15_generalization_gap.pdf
+    Currently embedded: Figure 15
+    Action: Remove 'Figure 15:', keep title only
+    File modified: ___________
+
+[ ] Figure 10 (LaTeX): fig16_architecture.pdf
+    Currently embedded: Figure 16
+    Action: Remove 'Figure 16:', keep title only
+    File modified: ___________
+
+--------------------------------------------------------------------------------
+VERIFICATION:
+--------------------------------------------------------------------------------
+[ ] All figures regenerated
+[ ] Verified in LaTeX compilation
+[ ] No 'Figure X:' visible in any embedded images
+[ ] Captions show correct sequential numbering
+[ ] Ready for CACM submission

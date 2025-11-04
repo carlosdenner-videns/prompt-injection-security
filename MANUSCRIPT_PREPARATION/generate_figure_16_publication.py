@@ -20,7 +20,7 @@ ax.axis('off')
 # ============================================================================
 # TITLE
 # ============================================================================
-ax.text(8, 10.6, 'Figure 16: Prompt Injection Detection Pipeline Architecture', 
+ax.text(8, 10.6, 'Prompt Injection Detection Pipeline Architecture', 
         ha='center', fontsize=16, fontweight='bold')
 ax.text(8, 10.15, 'Input-Side Detection Before LLM Processing', 
         ha='center', fontsize=11, style='italic', color='#555')
@@ -284,10 +284,14 @@ for i, (color, label) in enumerate(colors_legend):
     ax.text(legend_x + i*2.0 + 0.2, legend_y - 0.04, label, fontsize=7, va='center')
 
 plt.tight_layout()
-output_path = Path(__file__).parent / 'GENERATED_FIGURES' / 'figure_16_system_architecture.png'
-plt.savefig(str(output_path), dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+# Save both PNG and PDF
+output_path_png = Path(__file__).parent / 'GENERATED_FIGURES' / 'figure_16_system_architecture.png'
+output_path_pdf = Path(__file__).parent / 'fig16_architecture.pdf'
+plt.savefig(str(output_path_png), dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
+plt.savefig(str(output_path_pdf), dpi=300, bbox_inches='tight', facecolor='white', edgecolor='none')
 print("✓ Figure 16 (Publication-Ready) generated successfully!")
-print(f"  Saved to: {output_path}")
+print(f"  PNG: {output_path_png}")
+print(f"  PDF: {output_path_pdf}")
 print("\nImprovements:")
 print("  ✓ Proper spacing and visual hierarchy")
 print("  ✓ Clear separation of sections")

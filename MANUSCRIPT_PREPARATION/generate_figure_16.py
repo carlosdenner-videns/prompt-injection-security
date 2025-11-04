@@ -15,7 +15,7 @@ ax.set_ylim(0, 10)
 ax.axis('off')
 
 # Title
-ax.text(5, 9.5, 'Figure 16: System Architecture - Prompt Injection Detection Pipeline', 
+ax.text(5, 9.5, 'System Architecture - Prompt Injection Detection Pipeline', 
         ha='center', fontsize=14, fontweight='bold')
 
 # Color scheme
