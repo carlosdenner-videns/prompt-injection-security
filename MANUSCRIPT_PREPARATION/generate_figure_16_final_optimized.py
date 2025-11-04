@@ -252,7 +252,7 @@ ax.text(9.3, y_example - 1.05, 'BLOCKED', ha='center', va='center',
         fontsize=7, family='monospace', color='white')
 
 # Performance metrics
-perf_text = 'Performance: 87% TPR on known attacks  |  0.77% FAR on benign  |  <0.1ms latency'
+perf_text = 'Performance: 87% TPR on known attacks  |  0.77% FAR on benign  |  <1ms latency (GPU)'
 ax.text(0.7, y_example - 1.5, perf_text, fontsize=8, style='italic', 
         color='#E65100', fontweight='bold')
 
@@ -272,10 +272,10 @@ ax.text(4.15, y_metrics + 0.15, 'Production Configuration: Normalizer + v3',
 metrics_lines_left = [
     'True Positive Rate (TPR): 87%',
     'False Alarm Rate (FAR): 0.77%',
-    'Latency: <0.1ms per sample',
+    'Latency: <1ms per sample (GPU)',
     'Complexity: ~1,200 lines',
     'Deployment: Stateless',
-    'Dependencies: None (pure Python)'
+    'Dependencies: sentence-transformers, torch'
 ]
 
 y_pos = y_metrics - 0.25
@@ -324,7 +324,7 @@ principles_lines = [
     '2. NORMALIZER FIRST: Unicode/homoglyph normalization ensures consistent detection',
     '3. COMPLEMENTARY DETECTORS: v1 (signature) + v3 (semantic) catch different patterns',
     '4. THRESHOLD-INVARIANT: Binary OR logic eliminates threshold tuning complexity',
-    '5. PRODUCTION-READY: <0.1ms latency, CPU-only, no external dependencies'
+    '5. PRODUCTION-READY: <1ms latency with GPU acceleration, stateless architecture'
 ]
 
 y_pos = y_principles - 0.05

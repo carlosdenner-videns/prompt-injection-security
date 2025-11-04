@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.3)  4 NOV 2025 10:57
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.3)  4 NOV 2025 11:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -700,10 +700,6 @@ nuxLibertineT-TLF.
 LaTeX Font Info:    Font shape `T1/LinuxLibertineT-TLF/m/n' will be
 (Font)              scaled to size 9.0pt on input line 3652.
 )
-
-Class acmart Warning: Do not put several authors in the same \author macro! on 
-input line 9.
-
 (C:\Users\carlo\AppData\Local\Programs\MiKTeX\tex/latex/multirow\multirow.sty
 Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
 \multirow@colwidth=\skip82
@@ -1301,11 +1297,11 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 [12.12 <./fig10_obfuscation_fpr.pdf>]
-<fig16_architecture.pdf, id=546, 1149.09305pt x 735.22678pt>
+<fig16_architecture.pdf, id=546, 1149.09305pt x 787.74298pt>
 File: fig16_architecture.pdf Graphic file (type pdf)
 <use fig16_architecture.pdf>
 Package pdftex.def Info: fig16_architecture.pdf  used on input line 348.
-(pdftex.def)             Requested size: 430.00462pt x 275.1372pt.
+(pdftex.def)             Requested size: 430.00462pt x 294.78987pt.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/b/n' will be
 (Font)              scaled to size 8.0pt on input line 349.
 LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/it' will be
@@ -1317,16 +1313,16 @@ LaTeX Font Info:    Font shape `T1/LinuxBiolinumT-TLF/m/it' will be
 [14.14 <./fig15_generalization_gap.pdf>]
 
 [15.15 <./fig13_adversarial_evasion.pdf>]
-Underfull \vbox (badness 4608) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
 [16.16 <./fig16_architecture.pdf>]
+Underfull \vbox (badness 2556) has occurred while \output is active []
+
+
 
 [17.17]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
 
 [18.18]
 
@@ -1365,11 +1361,11 @@ Package rerunfilecheck Info: File `prompt_injection_cacm.out' has not changed.
 (rerunfilecheck)             Checksum: 2951509A6D662BC230B5AD17F2990645;3578.
  ) 
 Here is how much of TeX's memory you used:
- 25912 strings out of 468080
- 485126 string characters out of 5425772
- 922988 words of memory out of 5000000
+ 25915 strings out of 468080
+ 485201 string characters out of 5425772
+ 922781 words of memory out of 5000000
  53375 multiletter control sequences out of 15000+600000
- 819306 words of font info for 467 fonts, out of 8000000 for 9000
+ 819579 words of font info for 469 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  90i,12n,131p,1436b,1281s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/carlo/AppData/Local/Programs/MiKTeX/fonts/type1/public/inconsolata/
@@ -1386,9 +1382,9 @@ iKTeX/fonts/type1/public/newtx/NewTXMI.pfb><C:/Users/carlo/AppData/Local/Progra
 ms/MiKTeX/fonts/type1/public/newtx/NewTXMI7.pfb><C:/Users/carlo/AppData/Local/P
 rograms/MiKTeX/fonts/type1/public/newtx/txmiaX.pfb><C:/Users/carlo/AppData/Loca
 l/Programs/MiKTeX/fonts/type1/public/newtx/txsys.pfb>
-Output written on prompt_injection_cacm.pdf (21 pages, 3072245 bytes).
+Output written on prompt_injection_cacm.pdf (21 pages, 1407061 bytes).
 PDF statistics:
- 867 PDF objects out of 1000 (max. 8388607)
+ 1150 PDF objects out of 1200 (max. 8388607)
  108 named destinations out of 1000 (max. 500000)
  99027 words of extra memory for PDF output out of 106986 (max. 10000000)
 

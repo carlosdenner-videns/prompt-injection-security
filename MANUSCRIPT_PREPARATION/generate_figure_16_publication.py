@@ -196,7 +196,7 @@ ax.text(9.8, y_example - 0.95, 'Decision:\nBLOCKED', ha='center', va='center',
         fontsize=7.5, family='monospace', color='white', fontweight='bold')
 
 # Performance metrics
-ax.text(0.5, y_example - 1.65, 'Performance: 87% TPR on known attacks  |  0.77% FAR on benign  |  <0.1ms latency', 
+ax.text(0.5, y_example - 1.65, 'Performance: 87% TPR on known attacks  |  0.77% FAR on benign  |  <1ms latency (GPU)', 
         fontsize=8, style='italic', color='#E65100', fontweight='bold')
 
 # ============================================================================
@@ -213,10 +213,10 @@ ax.text(3.95, y_metrics + 0.5, 'Production Configuration: Normalizer + v3',
 
 metrics_text_left = """True Positive Rate (TPR): 87% on known attacks
 False Alarm Rate (FAR): 0.77% on obfuscated benign
-Latency: <0.1ms per sample (CPU-only)
+Latency: <1ms per sample (GPU-accelerated)
 Complexity: ~1,200 lines of code
 Deployment: Stateless, parallelizable
-Dependencies: None (pure Python)"""
+Dependencies: sentence-transformers, torch"""
 
 ax.text(0.6, y_metrics + 0.15, metrics_text_left, fontsize=7.5, family='monospace', 
         verticalalignment='top')
@@ -257,7 +257,7 @@ principles_text = """1. INPUT-SIDE DETECTION: Attacks blocked BEFORE reaching th
 2. NORMALIZER FIRST: Unicode/homoglyph normalization ensures consistent detection across obfuscation techniques
 3. COMPLEMENTARY DETECTORS: v1 (signature) + v3 (semantic) catch different attack patterns through OR fusion
 4. THRESHOLD-INVARIANT: Binary OR logic eliminates threshold tuning complexity in deployment
-5. PRODUCTION-READY: <0.1ms latency, CPU-only, no external dependencies, stateless architecture"""
+5. PRODUCTION-READY: <1ms latency with GPU acceleration, stateless architecture"""
 
 ax.text(0.6, y_principles + 0.3, principles_text, fontsize=7.5, verticalalignment='top')
 
